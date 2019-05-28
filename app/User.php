@@ -15,9 +15,6 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'nama', 'email', 'password',
-    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -29,4 +26,9 @@ class User extends Authenticatable
     ];
 
     protected $guarded = [];
+
+    public function satuan_kerja()
+    {
+        return $this->belongsTo(SatuanKerja::class);
+    }
 }

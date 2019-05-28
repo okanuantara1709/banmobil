@@ -17,10 +17,11 @@ class CreateTransaksisTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('rekening_id')->unsigned();
             $table->string('tipe');
-            $table->string('nama');
-            $table->double('jumlah',15,2)->default(0.0);
-            $table->date('tgl');
+            $table->string('nama_petugas');
+            $table->double('nominal',15,2)->default(0.0);
+            $table->date('tgl_transaksi');
             $table->string('metode_pembayaran');
+            $table->string('no_cek');
             $table->string('status');
             $table->timestamps();
 

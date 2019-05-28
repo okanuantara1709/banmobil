@@ -12,5 +12,20 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
+});
+
+Auth::routes();
+
+Route::group(['middleware' => 'auth','prefix' => 'admin','as' => 'admin.'], function(){
+    Route::get('dashboard','DashboardController@index')->name('dashboard.index');
+    Route::get('user/profile','UserController@profile')->name('user.profile');
+    Route::resources([
+        'lpj' => 'LPJController',
+        'rekening' => 'RekeningController',
+        'user' => 'UserController',
+        'satuan-kerja' => 'SatuanKerjaController',
+        'spm' => 'SPMController',
+        'transaksi' => 'TransaksiController'
+    ]);
 });

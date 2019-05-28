@@ -16,10 +16,10 @@ class CreateSPMSTable extends Migration
         Schema::create('spm', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('rekening_id')->unsigned();
-            $table->string('jenis_pengeluaran');
-            $table->text('uraian');
+            $table->date('tanggal_surat');
+            $table->string('no_surat');
+            $table->string('jenis_spm');
             $table->double('nominal',15,2)->default(0.0);
-            $table->date('tgl');
             $table->string('status');
             $table->timestamps();
 

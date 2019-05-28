@@ -18,7 +18,11 @@ class CreateSatuanKerjasTable extends Migration
             $table->string('nama_satker');
             $table->string('alamat');
             $table->string('email');
-            $table->double('kas_tunai',15,2)->default(0.0);
+            $table->string('telepon');
+            $table->text('kementrian_lembaga');
+            $table->integer('no_krws_dan_kewenangan');
+            $table->string('nama_bendahara');
+            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });
