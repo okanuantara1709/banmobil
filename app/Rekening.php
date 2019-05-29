@@ -10,4 +10,9 @@ class Rekening extends Model
     use SoftDeletes;
     protected $table = 'rekening';
     protected $guarded = [];
+
+    public function satuan_kerja()
+    {
+        return  $this->belongsTo(SatuanKerja::class,'satker_id');
+    }
 }

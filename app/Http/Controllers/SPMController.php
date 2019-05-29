@@ -3,9 +3,68 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\ControllerTrait;
+use App\SatuanKerja;
+use App\SPM;
+use Alert;
+use App\Rekening;
 
 class SPMController extends Controller
 {
+    use ControllerTrait;
+
+    private $template = [
+        'title' => 'SPM',
+        'route' => 'admin.spm',
+        'menu' => 'spm',
+        'icon' => 'fa fa-book',
+        'theme' => 'skin-red'
+    ];
+
+    private function form()
+    {
+        $satker = Rekening::select('id as value','nama_rekening as name')
+            ->get();
+        $bulan = [];
+        return [
+            [
+                'label' => 'Rekening',
+                'name' => 'rekening_id',
+                'type' => 'select',
+                'option' => $satker,
+                'view_index' => true,
+                'view_relation' => 'rekening->nama_rekening'
+            ],
+            [
+                'label' => 'Tanggal Surat',
+                'name' => 'tanggal_surat',
+                'type' => 'datepicker',
+                'view_index' => true,
+            ],
+            [
+                'label' => 'Nomor Surat',
+                'name' => 'no_surat',
+                'view_index' => true,
+            ],
+            [
+                'label' => 'Jenis SPM',
+                'name' => 'jenis_spm',
+                'view_index' => true
+            ],
+            [
+                'label' => 'Nominal',
+                'name' => 'nominal',
+                'validation.store' => 'required|numeric',
+                'validation.update' => 'required|numeric',
+                'view_index' => true
+            ],
+            [
+                'label' => 'Status',
+                'name' => 'status',
+                'view_index' => true,
+            ]
+        ];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +72,10 @@ class SPMController extends Controller
      */
     public function index()
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = SPM::all();
+        return view('admin.master.index',compact('template','form','data'));
     }
 
     /**
@@ -23,7 +85,10 @@ class SPMController extends Controller
      */
     public function create()
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = SPM::all();
+        return view('admin.master.create',compact('template','form','data'));
     }
 
     /**
@@ -34,7 +99,10 @@ class SPMController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->formValidation($request);
+        SPM::create($request->all());
+        Alert::make('success','Berhasil simpan data');
+        return redirect(route($this->template['route'].'.index'));
     }
 
     /**
@@ -45,7 +113,10 @@ class SPMController extends Controller
      */
     public function show($id)
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = SPM::find($id);
+        return view('admin.master.show',compact('template','form','data'));
     }
 
     /**
@@ -56,7 +127,10 @@ class SPMController extends Controller
      */
     public function edit($id)
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = SPM::find($id);
+        return view('admin.master.edit',compact('template','form','data'));
     }
 
     /**
@@ -68,7 +142,11 @@ class SPMController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->formValidation($request);
+        SPM::find($id)
+            ->update($request->all());
+        Alert::make('success','Berhasil simpan data');
+        return redirect(route($this->template['route'].'.index'));    
     }
 
     /**
@@ -79,6 +157,9 @@ class SPMController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SPM::find($id)
+            ->delete();
+        Alert::make('success','Berhasil menghapus data');
+        return redirect(route($this->template['route'].'.index'));
     }
 }

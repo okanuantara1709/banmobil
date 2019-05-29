@@ -55,6 +55,14 @@
                                                     <a href="{{asset($data->{$item['name']})}}" target="_blank">{{$data->{$item['name']} }}</a>
                                                 </td>
                                             </tr>
+                                            @elseif(array_key_exists('view_relation',$item) && !empty($item['view_relation']))
+                                            <tr>
+                                                <td>{{$item['label']}}</td>
+                                                <td>:</td>
+                                                <td>
+                                                    {{AppHelper::viewRelation($data,$item['view_relation'])}}
+                                                </td>
+                                            </tr>
                                             @else
                                             <tr>
                                                 <td>{{$item['label']}}</td>

@@ -120,7 +120,10 @@ class SatuanKerjaController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = SatuanKerja::find($id);
+        $template = (object) $this->template;
+        $form = $this->form();
+        return view('admin.master.show',compact('data','template','form'));
     }
 
     /**
@@ -131,7 +134,10 @@ class SatuanKerjaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = SatuanKerja::find($id);
+        $template = (object) $this->template;
+        $form = $this->form();
+        return view('admin.master.edit',compact('data','template','form'));
     }
 
     /**
@@ -143,7 +149,11 @@ class SatuanKerjaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->formValidation($request);
+        SatuanKerja::find($id)
+            ->update($request->all());
+        Alert::make('success','Berhasil simpan data');
+        return redirect(route($this->template['route'].'.index'));
     }
 
     /**
@@ -154,6 +164,9 @@ class SatuanKerjaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SatuanKerja::find($id)
+            ->delete();
+        Alert::make('success','Berhasil simpan data');
+        return redirect(route($this->template['route'].'.index'));
     }
 }

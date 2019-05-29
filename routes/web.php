@@ -20,6 +20,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth','prefix' => 'admin','as' => 'admin.'], function(){
     Route::get('dashboard','DashboardController@index')->name('dashboard.index');
     Route::get('user/profile','UserController@profile')->name('user.profile');
+    Route::post('user/profile','UserController@setProfile')->name('user.profile.update');
     Route::resources([
         'lpj' => 'LPJController',
         'rekening' => 'RekeningController',

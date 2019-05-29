@@ -16,7 +16,7 @@ class CreateLaporanPertanggungJawabansTable extends Migration
         Schema::create('lpj', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('satker_id')->unsigned();
-            $table->integer('bulan');
+            $table->string('bulan');
             $table->integer('tahun');
             $table->date('tanggal_input');
             $table->date('tanggal_dokumen');

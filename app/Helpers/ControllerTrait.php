@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 trait ControllerTrait {
 
-    public function formValidation(Request $r)
+    public function formValidation(Request $r, $overide = [])
     {
         $validations = [];
         foreach ($this->form() as $form) {
@@ -24,6 +24,7 @@ trait ControllerTrait {
                 }
             }
         }
+        $validations = array_merge($validations,$overide);
         $r->validate($validations);
     }
 }
