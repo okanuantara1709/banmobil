@@ -3,9 +3,76 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\ControllerTrait;
+use Alert;
+use App\Rekening;
+use App\Transaksi;
 
 class TransaksiController extends Controller
 {
+    use ControllerTrait;
+
+    private $template = [
+        'title' => 'Transaksi',
+        'route' => 'admin.transaksi',
+        'menu' => 'transaksi',
+        'icon' => 'fa fa-book',
+        'theme' => 'skin-red'
+    ];
+
+    private function form()
+    {
+        $satker = Rekening::select('id as value','nama_rekening as name')
+            ->get();
+        return [
+            [
+                'label' => 'Rekening',
+                'name' => 'rekening_id',
+                'type' => 'select',
+                'option' => $satker,
+                'view_index' => true,
+                'view_relation' => 'rekening->nama_rekening'
+            ],
+            [
+                'label' => 'Tipe',
+                'name' => 'tipe',
+                'view_index' => true,
+            ],
+            [
+                'label' => 'Nama Petugas',
+                'name' => 'nama_petugas',
+                'view_index' => true
+            ],
+            [
+                'label' => 'Nominal',
+                'name' => 'nominal',
+                'view_index' => true,
+                'validation.store' => 'required|numeric',
+                'validation.update' => 'required|numeric',
+            ],
+            [
+                'label' => 'Tanggal Transaksi',
+                'name' => 'tgl_transaksi',
+                'type' => 'datepicker',
+                'view_index' => true
+            ],
+            [
+                'label' => 'Metode Pembayaran',
+                'name' => 'metode_pembayaran',
+                'view_index' => true,
+            ],
+            [
+                'label' => 'Nomor Cek',
+                'name' => 'no_cek',
+                'view_index' => true
+            ],
+            [
+                'label' => 'Status',
+                'name' => 'status',
+                'view_index' => true
+            ]
+        ];
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +80,10 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = Transaksi::all();
+        return view('admin.master.index',compact('template','form','data'));
     }
 
     /**
@@ -23,7 +93,10 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = Transaksi::all();
+        return view('admin.master.create',compact('template','form','data'));
     }
 
     /**
@@ -34,7 +107,10 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->formValidation($request);
+        Transaksi::create($request->all());
+        Alert::make('success','Berhasil simpan data');
+        return redirect(route($this->template['route'].'.index'));
     }
 
     /**
@@ -45,7 +121,10 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = Transaksi::find($id);
+        return view('admin.master.show',compact('template','form','data'));
     }
 
     /**
@@ -56,7 +135,10 @@ class TransaksiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $template = (object) $this->template;
+        $form = $this->form();
+        $data = Transaksi::find($id);
+        return view('admin.master.edit',compact('template','form','data'));
     }
 
     /**
@@ -68,7 +150,11 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->formValidation($request);
+        Transaksi::find($id)
+            ->update($request->all());
+        Alert::make('success','Berhasil simpan data');
+        return redirect(route($this->template['route'].'.index'));    
     }
 
     /**
@@ -79,6 +165,9 @@ class TransaksiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Transaksi::find($id)
+            ->delete();
+        Alert::make('success','Berhasil menghapus data');
+        return redirect(route($this->template['route'].'.index'));
     }
 }

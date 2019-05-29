@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\ControllerTrait;
-use App\SatuanKerja;
 use App\SPM;
 use Alert;
 use App\Rekening;
@@ -25,7 +24,6 @@ class SPMController extends Controller
     {
         $satker = Rekening::select('id as value','nama_rekening as name')
             ->get();
-        $bulan = [];
         return [
             [
                 'label' => 'Rekening',

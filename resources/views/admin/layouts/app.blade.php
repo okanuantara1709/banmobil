@@ -159,6 +159,14 @@
                             </a>
                         </li>   
                     @endif
+                    @if(AppHelper::access(['Admin']))
+                        <li class="{{$template->menu == 'transaksi' ? 'active' : ''}}">
+                            <a href="{{route('admin.transaksi.index')}}"  >
+                                <i class="fa fa-book"></i> 
+                                <span>Transaksi</span>
+                            </a>
+                        </li>   
+                    @endif
                 </ul>
             </section>
             <!-- /.sidebar -->

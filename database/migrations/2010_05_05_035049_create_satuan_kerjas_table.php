@@ -20,7 +20,7 @@ class CreateSatuanKerjasTable extends Migration
             $table->string('email');
             $table->string('telepon');
             $table->text('kementrian_lembaga');
-            $table->integer('no_krws_dan_kewenangan');
+            $table->text('no_krws_dan_kewenangan');
             $table->string('nama_bendahara');
             $table->string('status');
             $table->timestamps();
