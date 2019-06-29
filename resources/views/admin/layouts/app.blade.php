@@ -135,7 +135,7 @@
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Admin']))
+                    @if(AppHelper::access(['Operator']))
                         <li class="{{$template->menu == 'lpj' ? 'active' : ''}}">
                             <a href="{{route('admin.lpj.index')}}"  >
                                 <i class="fa fa-book"></i> 
@@ -152,14 +152,22 @@
                         </li>   
                     @endif
                     @if(AppHelper::access(['Admin']))
-                        <li class="{{$template->menu == 'spm' ? 'active' : ''}}">
-                            <a href="{{route('admin.spm.index')}}"  >
+                        <li class="{{$template->menu == 'spm-admin' ? 'active' : ''}}">
+                            <a href="{{route('admin.spm-admin.index')}}"  >
                                 <i class="fa fa-book"></i> 
                                 <span>SPM</span>
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Admin']))
+                    @if(AppHelper::access(['Operator']))
+                    <li class="{{$template->menu == 'spm' ? 'active' : ''}}">
+                        <a href="{{route('admin.spm.index')}}"  >
+                            <i class="fa fa-book"></i> 
+                            <span>SPM</span>
+                        </a>
+                    </li>   
+                @endif
+                    @if(AppHelper::access(['Operator']))
                         <li class="{{$template->menu == 'transaksi' ? 'active' : ''}}">
                             <a href="{{route('admin.transaksi.index')}}"  >
                                 <i class="fa fa-book"></i> 

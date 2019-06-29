@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth','prefix' => 'admin','as' => 'admin.'], func
         'user' => 'UserController',
         'satuan-kerja' => 'SatuanKerjaController',
         'spm' => 'SPMController',
-        'transaksi' => 'TransaksiController'
+        'transaksi' => 'TransaksiController',
+        'spm-admin' => 'SPMAdminController'
     ]);
 });

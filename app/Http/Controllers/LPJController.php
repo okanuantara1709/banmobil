@@ -23,6 +23,7 @@ class LPJController extends Controller
     private function form()
     {
         $satker = SatuanKerja::select('id as value','nama_satker as name')
+            ->where('id',auth()->user()->satker_id)
             ->get();
         $bulan = [];
         $bln = [

@@ -23,6 +23,7 @@ class TransaksiController extends Controller
     private function form()
     {
         $satker = Rekening::select('id as value','nama_rekening as name')
+            ->where('satker_id',auth()->user()->satker_id)
             ->get();
         return [
             [
@@ -36,6 +37,13 @@ class TransaksiController extends Controller
             [
                 'label' => 'Tipe',
                 'name' => 'tipe',
+                'type' => 'select',
+                'option' => [
+                    [
+                        'value' => 'Pengeluaran',
+                        'name' => 'Pengeluaran'
+                    ]
+                ],
                 'view_index' => true,
             ],
             [

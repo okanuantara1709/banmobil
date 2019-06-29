@@ -8,23 +8,41 @@ use App\SPM;
 use Alert;
 use App\Rekening;
 
-class SPMController extends Controller
+class SPMAdminController extends Controller
 {
     use ControllerTrait;
 
     private $template = [
         'title' => 'SPM',
-        'route' => 'admin.spm',
-        'menu' => 'spm',
+        'route' => 'admin.spm-admin',
+        'menu' => 'spm-admin',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red'
+        'theme' => 'skin-red',
+        'config' => [
+            'index.show.is_show' => false,
+            'index.create.is_show' => false,
+            'index.delete.is_show' => false,
+        ]
     ];
 
     private function form()
     {
         $satker = Rekening::select('id as value','nama_rekening as name')
-            ->where('satker_id',auth()->user()->satker_id)
             ->get();
+        $status = [
+            [
+                'value' => 'Diproses',
+                'name' => 'Diproses'
+            ],
+            [
+                'value' => 'Diterima',
+                'name' => 'Diterima'
+            ],
+            [
+                'value' => 'Ditolak',
+                'name' => 'Ditolak'
+            ]
+        ];
         return [
             [
                 'label' => 'Rekening',
@@ -60,8 +78,9 @@ class SPMController extends Controller
             [
                 'label' => 'Status',
                 'name' => 'status',
-                'type' => 'hidden',
-                'view_index' => true
+                'type' => 'select',
+                'option' => $status,
+                'view_index' => true,
             ]
         ];
     }
@@ -100,9 +119,7 @@ class SPMController extends Controller
     public function store(Request $request)
     {
         $this->formValidation($request);
-        $data = $request->all();
-        $data['status'] = 'Diproses';
-        SPM::create($data);
+        SPM::create($request->all());
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
     }
