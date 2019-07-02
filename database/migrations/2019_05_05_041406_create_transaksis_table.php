@@ -21,7 +21,8 @@ class CreateTransaksisTable extends Migration
             $table->double('nominal',15,2)->default(0.0);
             $table->date('tgl_transaksi');
             $table->string('metode_pembayaran');
-            $table->string('no_cek');
+            $table->string('no_c ek');
+            $table->string('kategori');
             $table->string('status');
             $table->timestamps();
 
