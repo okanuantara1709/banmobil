@@ -76,6 +76,10 @@ class TransaksiController extends Controller
                     [
                         'value' => 'Pengeluaran',
                         'name' => 'Pengeluaran'
+                    ],
+                    [
+                        'value' => 'Pemasukan',
+                        'name' => 'Pemasukan'
                     ]
                 ],
                 'view_index' => true,
