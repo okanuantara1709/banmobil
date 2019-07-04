@@ -166,12 +166,20 @@
                             <span>SPM</span>
                         </a>
                     </li>   
-                @endif
+                    @endif
                     @if(AppHelper::access(['Operator']))
                         <li class="{{$template->menu == 'transaksi' ? 'active' : ''}}">
                             <a href="{{route('admin.transaksi.index')}}"  >
                                 <i class="fa fa-book"></i> 
                                 <span>Transaksi</span>
+                            </a>
+                        </li>   
+                    @endif
+                    @if(AppHelper::access(['Admin']))
+                        <li class="{{$template->menu == 'rekonsiliasi' ? 'active' : ''}}">
+                            <a href="{{route('admin.rekonsiliasi.index')}}"  >
+                                <i class="fa fa-handshake-o"></i> 
+                                <span>Rekonsiliasi</span>
                             </a>
                         </li>   
                     @endif

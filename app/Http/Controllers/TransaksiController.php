@@ -116,7 +116,8 @@ class TransaksiController extends Controller
                 'label' => 'Kategori',
                 'name' => 'kategori',
                 'type' => 'select',
-                'option' => $kategori
+                'option' => $kategori,
+                'view_index' => true
             ],
             [
                 'label' => 'Status',
