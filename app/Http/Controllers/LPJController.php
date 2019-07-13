@@ -17,7 +17,7 @@ class LPJController extends Controller
         'route' => 'admin.lpj',
         'menu' => 'lpj',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ];
 
     private function form()

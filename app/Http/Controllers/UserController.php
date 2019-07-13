@@ -17,7 +17,7 @@ class UserController extends Controller
         'route' => 'admin.user',
         'menu' => 'user',
         'icon' => 'fa fa-users',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ];
 
     private function form()

@@ -12,11 +12,12 @@ class DashboardController extends Controller
         'route' => 'dashboard',
         'menu' => 'dashboard',
         'icon' => 'fa fa-home',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ]; 
 
     public function index()
-    {   $template = (object) $this->template;
+    {   
+        $template = (object) $this->template;
         return view('admin.dashboard.index',compact('template'));
     }
 }

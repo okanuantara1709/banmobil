@@ -17,7 +17,7 @@ class SPMController extends Controller
         'route' => 'admin.spm',
         'menu' => 'spm',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ];
 
     private function form()
@@ -99,7 +99,7 @@ class SPMController extends Controller
      */
     public function store(Request $request)
     {
-        $this->formValidation($request);
+       // $this->formValidation($request);
         $data = $request->all();
         $data['status'] = 'Diproses';
         SPM::create($data);
@@ -144,7 +144,7 @@ class SPMController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->formValidation($request);
+        //$this->formValidation($request);
         SPM::find($id)
             ->update($request->all());
         Alert::make('success','Berhasil simpan data');

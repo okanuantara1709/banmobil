@@ -16,7 +16,7 @@ class SatuanKerjaController extends Controller
         'route' => 'admin.satuan-kerja',
         'menu' => 'satuan-kerja',
         'icon' => 'fa fa-group',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ];
 
     private function form()

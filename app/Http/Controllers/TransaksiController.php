@@ -17,7 +17,7 @@ class TransaksiController extends Controller
         'route' => 'admin.transaksi',
         'menu' => 'transaksi',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ];
 
     private function form()
@@ -42,6 +42,10 @@ class TransaksiController extends Controller
                     [
                         'value' => 'Pengeluaran',
                         'name' => 'Pengeluaran'
+                    ],
+                    [
+                        'value' => 'Pemasukan',
+                        'name' => 'Pemasukan'
                     ]
                 ],
                 'view_index' => true,
@@ -77,6 +81,21 @@ class TransaksiController extends Controller
             [
                 'label' => 'Status',
                 'name' => 'status',
+                'type' => 'select',
+                'option' => [
+                    [
+                        'value' => 'Sukses',
+                        'name' => 'Sukses'
+                    ],
+                    [
+                        'value' => 'Retur',
+                        'name' => 'Retur'
+                    ],
+                    [
+                        'value' => 'Gagal',
+                        'name' => 'Gagal'
+                    ]
+                ],
                 'view_index' => true
             ]
         ];

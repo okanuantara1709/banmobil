@@ -17,7 +17,7 @@ class SPMAdminController extends Controller
         'route' => 'admin.spm-admin',
         'menu' => 'spm-admin',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red',
+        'theme' => 'skin-blue',
         'config' => [
             'index.show.is_show' => false,
             'index.create.is_show' => false,

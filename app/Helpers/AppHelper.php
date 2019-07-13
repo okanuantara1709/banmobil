@@ -116,7 +116,7 @@ class AppHelper{
         }else if($bulan_vaksin ==3){
             $bg = "background-color:gray";
         }else if($bulan_vaksin ==4){
-            $bg = "background-color:red";
+            $bg = "background-color:blue";
         }
         $render = "<td style='$bg' class='text-center'>$text</td>";
         return $render;
