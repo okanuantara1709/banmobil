@@ -25,6 +25,40 @@ class TransaksiController extends Controller
         $satker = Rekening::select('id as value','nama_rekening as name')
             ->where('satker_id',auth()->user()->satker_id)
             ->get();
+        $kategori = [
+            [
+                'value' => 'BP KAS',
+                'name' => 'BP KAS'
+            ],
+            [ 
+                'value' => 'BP UANG',
+                'name' => 'BP UANG',
+            ],
+            [
+                'value' => 'BP BPP',
+                'name' => 'BP BPP',
+            ],
+            [
+                'value' => 'BP UP',
+                'name' => 'BP UP',
+            ],
+            [
+                'value' => 'BP UANG',
+                'name' => 'BP UANG',
+            ],
+            [
+                'value' => 'BP IS BENDAHARA',
+                'name' => 'BP IS BENDAHARA',
+            ],
+            [
+                'value' => 'BP PAJAK',
+                'name' => 'BP PAJAK',
+            ],
+            [
+                'value' => 'BP LAIN LAIN',
+                'name' => 'BP LAIN LAIN',
+            ], 
+        ];
         return [
             [
                 'label' => 'Rekening',
@@ -76,6 +110,13 @@ class TransaksiController extends Controller
             [
                 'label' => 'Nomor Cek',
                 'name' => 'no_cek',
+                'view_index' => true
+            ],
+            [
+                'label' => 'Kategori',
+                'name' => 'kategori',
+                'type' => 'select',
+                'option' => $kategori,
                 'view_index' => true
             ],
             [

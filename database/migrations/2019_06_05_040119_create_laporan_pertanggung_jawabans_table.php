@@ -15,7 +15,7 @@ class CreateLaporanPertanggungJawabansTable extends Migration
     {
         Schema::create('lpj', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('satker_id')->unsigned();
+            $table->bigInteger('rekening_id')->unsigned();
             $table->string('bulan');
             $table->integer('tahun');
             $table->date('tanggal_input');
@@ -32,7 +32,7 @@ class CreateLaporanPertanggungJawabansTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('satker_id')->references('id')->on('satker');
+            $table->foreign('rekening_id')->references('id')->on('rekening');
         });
     }
 

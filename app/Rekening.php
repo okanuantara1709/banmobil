@@ -13,6 +13,6 @@ class Rekening extends Model
 
     public function satuan_kerja()
     {
-        return  $this->belongsTo(SatuanKerja::class);
+        return  $this->belongsTo(SatuanKerja::class,'satker_id');
     }
 }

@@ -22,6 +22,7 @@ class CreateTransaksisTable extends Migration
             $table->date('tgl_transaksi');
             $table->string('metode_pembayaran');
             $table->string('no_cek');
+            $table->string('kategori');
             $table->string('status');
             $table->timestamps();
 

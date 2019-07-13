@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Helpers\ControllerTrait;
-use App\SatuanKerja;
+use App\Rekening;
 use App\LPJ;
 use Alert;
 
@@ -22,8 +22,8 @@ class LPJController extends Controller
 
     private function form()
     {
-        $satker = SatuanKerja::select('id as value','nama_satker as name')
-            ->where('id',auth()->user()->satker_id)
+        $rekening = Rekening::select('id as value','nama_rekening as name')
+            ->where('satker_id',auth()->user()->satker_id)
             ->get();
         $bulan = [];
         $bln = [
@@ -48,12 +48,12 @@ class LPJController extends Controller
         }
         return [
             [
-                'label' => 'Satuan Kerja',
-                'name' => 'satker_id',
+                'label' => 'Rekening',
+                'name' => 'rekening_id',
                 'type' => 'select',
-                'option' => $satker,
+                'option' => $rekening,
                 'view_index' => true,
-                'view_relation' => 'satuan_kerja->nama_satker'
+                'view_relation' => 'rekening->nama_rekening'
             ],
             [
                 'label' => 'Bulan',
