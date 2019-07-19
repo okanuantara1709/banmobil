@@ -16,14 +16,10 @@ class SatuanKerjaController extends Controller
         'route' => 'admin.satuan-kerja',
         'menu' => 'satuan-kerja',
         'icon' => 'fa fa-group',
-<<<<<<< HEAD
-        'theme' => 'skin-blue'
-=======
         'theme' => 'skin-red',
         'config' => [
             'index.delete.is_show' => false
         ]
->>>>>>> 3dee9c1288041bc39004f99951aa5082d568a68a
     ];
 
     private function form()
