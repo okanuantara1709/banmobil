@@ -71,6 +71,7 @@ class RekonsiliasiController extends Controller
         ];
         $data = [];
         $satker = SatuanKerja::all();
+        $lpj = [];
         
         if($request->has('satker')){
             $rekening = Rekening::where('satker_id',$request->satker)
@@ -101,20 +102,21 @@ class RekonsiliasiController extends Controller
                 ->get();
                 foreach($this->kategori as $kategori){
                     $data[$kategori['name']] = [
-                        'hasil_transaksi' => 0,
+                        'hasil_transaksi' => 0.00,
                         'hasil_lpj' => $lpj->{$this->convertKategori($kategori['name'])},
-                        'status' => 'TIDAK SESUAI'
+                        'status' => $lpj->{$this->convertKategori($kategori['name'])} == 0.0 ? 'SESUAI' : 'TIDAK SESUAI'
                     ];
                 }
                 foreach($transaksi as $item){
                     $total =  $item->total_pemasukan - $item->total_pengeluaran;
                     $data[$item->kategori]['hasil_transaksi'] = $total;
-                    $data[$item->kategori]['status'] = $total == $data[$item->kategori]['hasil_lpj'] ? 'SESUAI' : 'TIDAK SESUAI';
+                    $data[$item->kategori]['status'] = $total === $data[$item->kategori]['hasil_lpj'] ? 'SESUAI' : 'TIDAK SESUAI';
                 }
             }
             
         }
         $kategori = $this->kategori;
+        dd($data);
         return view('admin.rekonsiliasi.index',compact('template','satker','rekening','bln','data','kategori','lpj'));
     }
 
