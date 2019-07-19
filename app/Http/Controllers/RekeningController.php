@@ -17,7 +17,10 @@ class RekeningController extends Controller
         'route' => 'admin.rekening',
         'menu' => 'rekening',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-blue'
+        'theme' => 'skin-red',
+        'config' => [
+            'index.delete.is_show' => false
+        ]
     ];
 
     private function form()
@@ -25,6 +28,16 @@ class RekeningController extends Controller
         $satker = SatuanKerja::select('id as value','nama_satker as name')
             ->get();
         $bulan = [];
+        $status = [
+            [
+                'value' => 'Aktif',
+                'name' => 'Aktif'
+            ],
+            [
+                'value' => 'Tidak Aktif',
+                'name' => 'Tidak Aktif'
+            ]
+        ];
         return [
             [
                 'label' => 'Satuan Kerja',
@@ -43,6 +56,13 @@ class RekeningController extends Controller
                 'label' => 'Nomor Rekening',
                 'name' => 'no_rekening',
                 'view_index' => true,
+            ],
+            [
+                'label' => 'Status',
+                'name' => 'status',
+                'type' => 'select',
+                'option' => $status,
+                'view_index' => true
             ]
         ];
     }

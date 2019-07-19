@@ -40,6 +40,13 @@ class LPJController extends Controller
             'November',
             'Desember'
         ];
+        $tahun = [];
+        for($i = 2018; $i < 2025; $i++){
+            $tahun[] = [
+                'value' => $i,
+                'name' => $i
+            ];
+        }
         foreach($bln as $b){
             $bulan[] = [
                 'value' => $b,
@@ -65,7 +72,8 @@ class LPJController extends Controller
             [
                 'label' => 'Tahun',
                 'name' => 'tahun',
-                'type' => 'number',
+                'type' => 'select',
+                'option' => $tahun,
                 'view_index' => true
             ],
             [

@@ -80,7 +80,10 @@
                                     @if (count($data) < 1)
                                         <center>tidak ada data</center>
                                     @else
-                                    <table class="table table-bordered">
+                                    <button class="btn btn-primary btn-sm" onclick="printDiv()"><i class="fa fa-print"></i> Cetak</button>
+                                    <br>
+                                    <br>
+                                    <table class="table table-bordered" id="tableRekonsiliasi">
                                             <thead>
                                                 <tr>
                                                     <th>LPJ No : {{$lpj->no_dokumen}}</th>
@@ -121,5 +124,9 @@
            $('#formRekon').submit();
         });
     })
+
+    function printDiv(){
+        window.print();
+    }
     </script>
 @endpush

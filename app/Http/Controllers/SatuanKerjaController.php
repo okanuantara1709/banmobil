@@ -16,7 +16,14 @@ class SatuanKerjaController extends Controller
         'route' => 'admin.satuan-kerja',
         'menu' => 'satuan-kerja',
         'icon' => 'fa fa-group',
+<<<<<<< HEAD
         'theme' => 'skin-blue'
+=======
+        'theme' => 'skin-red',
+        'config' => [
+            'index.delete.is_show' => false
+        ]
+>>>>>>> 3dee9c1288041bc39004f99951aa5082d568a68a
     ];
 
     private function form()
@@ -24,6 +31,17 @@ class SatuanKerjaController extends Controller
         $role = [
             ['value' => 'Admin','name' => 'Admin'],
             ['value' => 'Operator','name' => 'Operator'],
+        ];
+
+        $status = [
+            [
+                'value' => 'Aktif',
+                'name' => 'Aktif'
+            ],
+            [
+                'value' => 'Tidak Aktif',
+                'name' => 'Tidak Aktif'
+            ]
         ];
 
         return [
@@ -52,23 +70,25 @@ class SatuanKerjaController extends Controller
             [
                 'label' => 'Lembaga Kementrian',
                 'name' => 'kementrian_lembaga',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'No KRWS & Kewenangan',
                 'name' => 'no_krws_dan_kewenangan',
                 'type' => 'textarea',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Nama Bendahara',
                 'name' => 'nama_bendahara',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Status',
                 'name' => 'status',
-                'view_index' => true
+                'view_index' => true,
+                'type' => 'select',
+                'option' => $status
             ]
         ];
     }
