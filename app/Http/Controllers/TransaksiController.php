@@ -105,7 +105,18 @@ class TransaksiController extends Controller
             [
                 'label' => 'Metode Pembayaran',
                 'name' => 'metode_pembayaran',
-                'view_index' => true,
+                'view_index' => false,
+                'type' => 'select',
+                'option' => [
+                    [
+                        'value' => 'Transfer',
+                        'name' => 'Transfer'
+                    ],
+                    [
+                        'value' => 'Cash',
+                        'name' => 'Cash'
+                    ]
+                ],
             ],
             [
                 'label' => 'Nomor Cek',

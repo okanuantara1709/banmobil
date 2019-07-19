@@ -17,7 +17,10 @@ class UserController extends Controller
         'route' => 'admin.user',
         'menu' => 'user',
         'icon' => 'fa fa-users',
-        'theme' => 'skin-red'
+        'theme' => 'skin-red',
+        'config' => [
+            'index.delete.is_show' => false
+        ]
     ];
 
     private function form()
@@ -27,7 +30,19 @@ class UserController extends Controller
             ['value' => 'Operator','name' => 'Operator'],
         ];
 
+        $status = [
+            [
+                'value' => 'Aktif',
+                'name' => 'Aktif'
+            ],
+            [
+                'value' => 'Tidak Aktif',
+                'name' => 'Tidak Aktif'
+            ]
+        ];
+
         $satker = SatuanKerja::select('id as value','nama_satker as name')
+            ->where('status','Aktif')
             ->get();
 
         return [
@@ -64,6 +79,13 @@ class UserController extends Controller
                 'option' => $role,
                 'view_index' => true
             ],
+            [
+                'label' => 'Status',
+                'name' => 'status',
+                'type' => 'select',
+                'option' => $status,
+                'view_index' => true
+            ]
         ];
     }
     /**

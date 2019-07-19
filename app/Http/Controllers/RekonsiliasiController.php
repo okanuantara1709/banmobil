@@ -37,10 +37,6 @@ class RekonsiliasiController extends Controller
             'name' => 'BP UP',
         ],
         [
-            'value' => 'BP UANG',
-            'name' => 'BP UANG',
-        ],
-        [
             'value' => 'BP IS BENDAHARA',
             'name' => 'BP IS BENDAHARA',
         ],
