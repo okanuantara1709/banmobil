@@ -113,8 +113,8 @@ class TransaksiController extends Controller
                         'name' => 'Transfer'
                     ],
                     [
-                        'value' => 'Cash',
-                        'name' => 'Cash'
+                        'value' => 'Cek',
+                        'name' => 'Cek'
                     ]
                 ],
             ],

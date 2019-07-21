@@ -54,7 +54,11 @@
                                                         @if (array_key_exists('view_relation',$item))
                                                         {{ AppHelper::viewRelation($row,$item['view_relation']) }}
                                                         @else
-                                                        {{ $row->{$item['name']} }}
+                                                            @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                                            Rp. {{number_format($row->{$item['name']},2,',','.')}}
+                                                            @else
+                                                            {{ $row->{$item['name']} }}
+                                                            @endif
                                                         @endif
                                                     </td>
                                                 @endif

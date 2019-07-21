@@ -15,4 +15,9 @@ class LPJ extends Model
     {
         return  $this->belongsTo(SatuanKerja::class,'satker_id');
     }
+
+    public function rekening()
+    {
+        return $this->belongsTo(Rekening::class);
+    }
 }

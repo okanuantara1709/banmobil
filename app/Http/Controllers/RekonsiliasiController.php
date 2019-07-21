@@ -8,6 +8,7 @@ use App\Rekening;
 use App\LPJ;
 use App\Transaksi;
 use DB;
+use Mpdf\Mpdf;
 
 class RekonsiliasiController extends Controller
 {
@@ -55,6 +56,7 @@ class RekonsiliasiController extends Controller
         $template = (object) $this->template;
         $satker = [];
         $rekening = [];
+        $tahun = [2016,2017,2018,2019];
         $bln = [
             'Januari',
             'Februari',
@@ -116,8 +118,13 @@ class RekonsiliasiController extends Controller
             
         }
         $kategori = $this->kategori;
-        dd($data);
-        return view('admin.rekonsiliasi.index',compact('template','satker','rekening','bln','data','kategori','lpj'));
+        if($request->has('download') && $request->download == 'true'){
+            $view = view('pdf.rekon',compact('data','lpj','kategori'))->render();
+            $pdf = new Mpdf();
+            $pdf->WriteHTML($view);
+            return $pdf->Output('REKON.pdf',\Mpdf\Output\Destination::INLINE);
+        }
+        return view('admin.rekonsiliasi.index',compact('template','satker','rekening','tahun','bln','data','kategori','lpj'));
     }
 
     protected function convertBulan($bulan){

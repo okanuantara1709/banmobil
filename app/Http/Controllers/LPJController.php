@@ -183,7 +183,12 @@ class LPJController extends Controller
     public function store(Request $request)
     {
         $this->formValidation($request);
-        LPJ::create($request->all());
+        $lpj = LPJ::where('rekening_id',$request->rekening_id)
+            ->orderBy('id','desc')
+            ->first();
+        $data = $request->all();
+        $data['saldo_awal'] = $lpj->saldo;
+        LPJ::create($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
     }
