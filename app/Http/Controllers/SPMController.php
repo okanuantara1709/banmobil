@@ -55,6 +55,7 @@ class SPMController extends Controller
                 'name' => 'nominal',
                 'validation.store' => 'required|numeric',
                 'validation.update' => 'required|numeric',
+                'format' => 'rupiah',
                 'view_index' => true
             ],
             [
@@ -74,7 +75,11 @@ class SPMController extends Controller
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = SPM::all();
+        $data = SPM::select('spm.*')
+            ->join('rekening','rekening.id','=','spm.rekening_id')
+            ->join('satker','satker.id','=','rekening.satker_id')
+            ->where('satker.id',auth()->user()->satker_id)
+            ->get();
         return view('admin.master.index',compact('template','form','data'));
     }
 
@@ -99,9 +104,11 @@ class SPMController extends Controller
      */
     public function store(Request $request)
     {
-       // $this->formValidation($request);
+        $this->formValidation($request,[
+            'status' => 'nullable'
+        ]);
         $data = $request->all();
-        $data['status'] = 'Diproses';
+        $data['status'] = 'Pending';
         SPM::create($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));

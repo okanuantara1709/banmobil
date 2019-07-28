@@ -73,6 +73,7 @@ class SPMAdminController extends Controller
                 'name' => 'nominal',
                 'validation.store' => 'required|numeric',
                 'validation.update' => 'required|numeric',
+                'format' => 'rupiah',
                 'view_index' => true
             ],
             [

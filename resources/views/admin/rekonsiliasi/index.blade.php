@@ -31,6 +31,7 @@
                         <div class="box-body">
                             <div class="row">
                                 <form action="{{route('admin.rekonsiliasi.index')}}" method="GET" id="formRekon">
+                                    <input type="hidden" name="download" value="false" id="download">
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Satuan Kerja</label>
@@ -56,7 +57,11 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Tahun</label>
-                                            <input type="number" class="form-control" id="tahun" name="tahun" value="{{request('tahun')}}">
+                                            <select name="tahun" class="form-control" id="tahun">
+                                                @foreach ($tahun as $item)
+                                                    <option value="{{$item}}" {{request('tahun') == $item? 'selected' : ''}}>{{$item}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -84,25 +89,25 @@
                                     <br>
                                     <br>
                                     <table class="table table-bordered" id="tableRekonsiliasi">
-                                            <thead>
+                                        <thead>
+                                            <tr>
+                                                <th>LPJ No : {{$lpj->no_dokumen}}</th>
+                                                <th>Hasil Transaksi</th>
+                                                <th>Hasil LPJ</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($kategori as $item)
                                                 <tr>
-                                                    <th>LPJ No : {{$lpj->no_dokumen}}</th>
-                                                    <th>Hasil Transaksi</th>
-                                                    <th>Hasil LPJ</th>
-                                                    <th>Status</th>
+                                                    <td>{{$item['name']}}</td>
+                                                    <td>Rp. {{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
+                                                    <td>Rp. {{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
+                                                    <td>{{$data[$item['name']]['status']}}</td>
                                                 </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($kategori as $item)
-                                                    <tr>
-                                                        <td>{{$item['name']}}</td>
-                                                        <td>Rp. {{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
-                                                        <td>Rp. {{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
-                                                        <td>{{$data[$item['name']]['status']}}</td>
-                                                    </tr>
-                                                @endforeach                                               
-                                            </tbody>
-                                        </table>
+                                            @endforeach                                               
+                                        </tbody>
+                                    </table>
                                     @endif
                                     
                                 </div>
@@ -126,7 +131,8 @@
     })
 
     function printDiv(){
-        window.print();
+       $('#download').val(true);
+       $('#formRekon').submit();
     }
     </script>
 @endpush
