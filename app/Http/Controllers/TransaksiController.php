@@ -95,6 +95,7 @@ class TransaksiController extends Controller
                 'view_index' => false,
                 'validation.store' => 'required|numeric',
                 'validation.update' => 'required|numeric',
+                'format' => 'rupiah',
             ],
             [
                 'label' => 'Tanggal Transaksi',

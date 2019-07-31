@@ -50,7 +50,7 @@
                                             <td>{{$key+1}}</td>
                                             @foreach ($form as $item)
                                                 @if (array_key_exists('view_index',$item) && $item['view_index'])
-                                                    <td>
+                                                    <td @if(array_key_exists('format',$item) && $item['format'] == 'rupiah') style="text-align:right" @endif>
                                                         @if (array_key_exists('view_relation',$item))
                                                         {{ AppHelper::viewRelation($row,$item['view_relation']) }}
                                                         @else
