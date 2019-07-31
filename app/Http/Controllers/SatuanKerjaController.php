@@ -16,7 +16,7 @@ class SatuanKerjaController extends Controller
         'route' => 'admin.satuan-kerja',
         'menu' => 'satuan-kerja',
         'icon' => 'fa fa-group',
-        'theme' => 'skin-red',
+        'theme' => 'skin-blue',
         'config' => [
             'index.delete.is_show' => false
         ]
@@ -49,19 +49,19 @@ class SatuanKerjaController extends Controller
             [
                 'label' => 'Alamat',
                 'name' => 'alamat',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Email',
                 'name' => 'email',
                 'type' => 'email',
-                'view_index' => true,
+                'view_index' => false,
                 'validation.store' => 'required|email'
             ],
             [
                 'label' => 'Telepon',
                 'name' => 'telepon',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Lembaga Kementrian',
@@ -77,7 +77,7 @@ class SatuanKerjaController extends Controller
             [
                 'label' => 'Nama Bendahara',
                 'name' => 'nama_bendahara',
-                'view_index' => false
+                'view_index' => true
             ],
             [
                 'label' => 'Status',

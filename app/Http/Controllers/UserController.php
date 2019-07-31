@@ -17,7 +17,7 @@ class UserController extends Controller
         'route' => 'admin.user',
         'menu' => 'user',
         'icon' => 'fa fa-users',
-        'theme' => 'skin-red',
+        'theme' => 'skin-blue',
         'config' => [
             'index.delete.is_show' => false
         ]
@@ -62,7 +62,7 @@ class UserController extends Controller
             [
                 'label' => 'Email',
                 'name' => 'email',
-                'view_index' => true,
+                'view_index' => false,
                 'validation.store' => 'required|unique:user,email'
             ],
             [
@@ -84,7 +84,7 @@ class UserController extends Controller
                 'name' => 'status',
                 'type' => 'select',
                 'option' => $status,
-                'view_index' => true
+                'view_index' => false
             ]
         ];
     }

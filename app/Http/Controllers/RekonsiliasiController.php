@@ -17,7 +17,7 @@ class RekonsiliasiController extends Controller
         'route' => 'admin.rekonsiliasi',
         'menu' => 'rekonsiliasi',
         'icon' => 'fa fa-handshake-o',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ];
 
     private $kategori = [

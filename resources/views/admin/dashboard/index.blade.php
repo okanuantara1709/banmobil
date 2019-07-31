@@ -19,19 +19,6 @@
 
         <!-- Main content -->
         <section class="content">
-<<<<<<< HEAD
-            <!-- Small boxes (Stat box) -->            
-            <!-- /.row -->
-            <!-- Main row -->
-            @if(AppHelper::access(['Admin']))
-            <div class="row">
-                <div class="col-md-12" style="padding-top:180px">                    
-                    <h2><center>KANTOR PELAYANAN PERBENDAHARAAN NEGARA DENPASAR</center></h2>                                    
-                </div>                
-            </div>
-            @else
-            
-=======
             @if (auth()->user()->role == 'Operator')
                 @if ( (int) \Carbon\Carbon::now()->format('d') < 11)
                     <div class="alert alert-danger" role="alert">
@@ -40,7 +27,6 @@
                         <p class="mb-0"></p>
                     </div>
                 @endif
->>>>>>> e7889b82d8696ef3ba3a7b254dfe729768605cc0
             @endif
             <div class="row">
                 <div class="col-md-12">

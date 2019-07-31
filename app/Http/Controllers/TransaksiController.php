@@ -87,12 +87,12 @@ class TransaksiController extends Controller
             [
                 'label' => 'Nama Petugas',
                 'name' => 'nama_petugas',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Nominal',
                 'name' => 'nominal',
-                'view_index' => true,
+                'view_index' => false,
                 'validation.store' => 'required|numeric',
                 'validation.update' => 'required|numeric',
             ],
@@ -121,14 +121,14 @@ class TransaksiController extends Controller
             [
                 'label' => 'Nomor Cek',
                 'name' => 'no_cek',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Kategori',
                 'name' => 'kategori',
                 'type' => 'select',
                 'option' => $kategori,
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Status',

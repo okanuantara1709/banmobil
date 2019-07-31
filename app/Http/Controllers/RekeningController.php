@@ -17,7 +17,7 @@ class RekeningController extends Controller
         'route' => 'admin.rekening',
         'menu' => 'rekening',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red',
+        'theme' => 'skin-blue',
         'config' => [
             'index.delete.is_show' => false
         ]
@@ -50,12 +50,12 @@ class RekeningController extends Controller
             [
                 'label' => 'Nama Rekening',
                 'name' => 'nama_rekening',
-                'view_index' => true,
+                'view_index' => false,
             ],
             [
                 'label' => 'Nomor Rekening',
                 'name' => 'no_rekening',
-                'view_index' => true,
+                'view_index' => false,
             ],
             [
                 'label' => 'Status',
