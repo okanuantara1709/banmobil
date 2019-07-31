@@ -101,8 +101,8 @@
                                             @foreach ($kategori as $item)
                                                 <tr>
                                                     <td>{{$item['name']}}</td>
-                                                    <td>Rp. {{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
-                                                    <td>Rp. {{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
+                                                    <td style="text-align:right">Rp. {{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
+                                                    <td style="text-align:right">Rp. {{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
                                                     <td>{{$data[$item['name']]['status']}}</td>
                                                 </tr>
                                             @endforeach                                               
