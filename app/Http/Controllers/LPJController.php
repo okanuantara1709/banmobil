@@ -95,56 +95,64 @@ class LPJController extends Controller
                 'name' => 'bp_kas',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP Uang',
                 'name' => 'bp_uang',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP BPP',
                 'name' => 'bp_bpp',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP UP',
                 'name' => 'bp_up',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP IS Bendahara',
                 'name' => 'bp_is_bendahara',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP Pajak',
                 'name' => 'bp_pajak',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP Lain Lain',
                 'name' => 'bp_lain_lain',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'Saldo',
                 'name' => 'saldo',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
-                'validation.update' => 'required|numeric'
+                'validation.update' => 'required|numeric',
+                'format' => 'rupiah'
             ],
         ];
     }

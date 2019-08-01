@@ -63,6 +63,14 @@
                                                     {{AppHelper::viewRelation($data,$item['view_relation'])}}
                                                 </td>
                                             </tr>
+                                            @elseif(array_key_exists('format',$item) && !empty($item['format']))
+                                                <tr>
+                                                    @if ($item['format'] == 'rupiah')
+                                                        <td>{{$item['label']}}</td>
+                                                        <td>:</td>
+                                                        <td>Rp. {!! number_format($data->{$item['name']},2,',','.') !!}</td>
+                                                    @endif
+                                                </tr>
                                             @else
                                             <tr>
                                                 <td>{{$item['label']}}</td>
