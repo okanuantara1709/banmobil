@@ -78,6 +78,7 @@ class RekonsiliasiController extends Controller
         if($request->has('satker')){
             $rekening = Rekening::where('satker_id',$request->satker)
                 ->get();
+            $satkerSelected = SatuanKerja::find($request->satker);
         };
         if($request->has('satker') && !empty($request->satker) 
             && $request->has('rekening') && !empty($request->rekening)
@@ -119,7 +120,9 @@ class RekonsiliasiController extends Controller
         }
         $kategori = $this->kategori;
         if($request->has('download') && $request->download == 'true'){
-            $view = view('pdf.rekon',compact('data','lpj','kategori'))->render();
+            $bulan = $request->bulan;
+            $tahun = $request->tahun;
+            $view = view('pdf.rekon',compact('data','lpj','kategori','satkerSelected','bulan','tahun'))->render();
             $pdf = new Mpdf();
             $pdf->WriteHTML($view);
             return $pdf->Output('REKON.pdf',\Mpdf\Output\Destination::INLINE);

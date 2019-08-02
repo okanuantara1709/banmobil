@@ -1,6 +1,14 @@
 @extends('admin.layouts.app')
 @push('css')
-
+<style>
+    .table-border th,.table-border td, .table-border thead{
+        border : 1px solid #b9b9b9;
+        border-bottom: 1px solid #b9b9b9 !important;
+    }
+    .table-border th{
+        text-align: center;
+    }
+</style>
 @endpush
 @section('content')
     @php
@@ -88,7 +96,7 @@
                                     <button class="btn btn-primary btn-sm" onclick="printDiv()"><i class="fa fa-print"></i> Cetak</button>
                                     <br>
                                     <br>
-                                    <table class="table table-bordered" id="tableRekonsiliasi">
+                                    <table class="table table-border" id="tableRekonsiliasi">
                                         <thead>
                                             <tr>
                                                 <th>LPJ No : {{$lpj->no_dokumen}}</th>

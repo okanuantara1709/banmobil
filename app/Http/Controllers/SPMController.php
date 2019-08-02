@@ -63,6 +63,11 @@ class SPMController extends Controller
                 'name' => 'status',
                 'type' => 'hidden',
                 'view_index' => true
+            ],
+            [
+                'label' => 'File',
+                'name' => 'file',
+                'type' => 'file'
             ]
         ];
     }
@@ -109,6 +114,7 @@ class SPMController extends Controller
         ]);
         $data = $request->all();
         $data['status'] = 'Pending';
+        $this->uploadFile($request,$data);
         SPM::create($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
@@ -152,8 +158,10 @@ class SPMController extends Controller
     public function update(Request $request, $id)
     {
         $this->formValidation($request);
+        $data = $request->all();
+        $this->uploadFile($request,$data);
         SPM::find($id)
-            ->update($request->all());
+            ->update($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));    
     }
