@@ -120,7 +120,11 @@ class SPMAdminController extends Controller
     public function store(Request $request)
     {
         $this->formValidation($request);
-        SPM::create($request->all());
+        $data = $request->all();
+
+        $this->uploadFile($request,$data);
+        SPM::create($data);
+
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
     }
@@ -163,8 +167,12 @@ class SPMAdminController extends Controller
     public function update(Request $request, $id)
     {
         $this->formValidation($request);
+        $data = $request->all();
+
+        $this->uploadFile($request,$data);
+
         SPM::find($id)
-            ->update($request->all());
+            ->update($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));    
     }
