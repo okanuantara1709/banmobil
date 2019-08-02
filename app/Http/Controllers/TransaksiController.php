@@ -7,6 +7,7 @@ use App\Helpers\ControllerTrait;
 use Alert;
 use App\Rekening;
 use App\Transaksi;
+use Auth;
 
 class TransaksiController extends Controller
 {
@@ -17,7 +18,12 @@ class TransaksiController extends Controller
         'route' => 'admin.transaksi',
         'menu' => 'transaksi',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red'
+        'theme' => 'skin-red',
+        'config' => [
+            'index.create.is_show' => 'Operator',
+            'index.delete.is_show' => 'Operator',
+            'index.edit.is_show' => 'Operator',
+        ]
     ];
 
     private function form()
@@ -147,7 +153,14 @@ class TransaksiController extends Controller
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = Transaksi::all();
+        if(Auth::guard()->user()->role == "Admin"){
+            $data = Transaksi::all();
+        }else{
+            $data = Transaksi::join('rekening','rekening.id','=','transaksi.rekening_id')
+            ->join('satker','satker.id','=','rekening.satker_id')
+            ->where('satker.id',auth()->user()->satker_id)->get();
+        }
+        
         return view('admin.master.index',compact('template','form','data'));
     }
 
