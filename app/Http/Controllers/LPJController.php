@@ -154,6 +154,11 @@ class LPJController extends Controller
                 'validation.update' => 'required|numeric',
                 'format' => 'rupiah'
             ],
+            [
+                'label' => 'File',
+                'name' => 'file',
+                'type' => 'file',
+            ],
         ];
     }
     /**
@@ -191,11 +196,15 @@ class LPJController extends Controller
     public function store(Request $request)
     {
         $this->formValidation($request);
+        
         $lpj = LPJ::where('rekening_id',$request->rekening_id)
             ->orderBy('id','desc')
             ->first();
+            // dd($lpj);
+        
         $data = $request->all();
-        $data['saldo_awal'] = $lpj->saldo;
+        $data['saldo_awal'] = $lpj == null ? 0 : $lpj->saldo;
+        $this->uploadFile($request,$data);
         LPJ::create($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
@@ -239,8 +248,10 @@ class LPJController extends Controller
     public function update(Request $request, $id)
     {
         $this->formValidation($request);
+        $data = $request->all();
+        $this->uploadFile($request,$data);
         LPJ::find($id)
-            ->update($request->all());
+            ->update($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));    
     }

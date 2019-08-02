@@ -27,4 +27,16 @@ trait ControllerTrait {
         $validations = array_merge($validations,$overide);
         $r->validate($validations);
     }
+
+    public function uploadFile($request,&$data){
+        $file = $request->file();
+        foreach($file as $key => $value){
+            if($request->file("$key") != null){
+                $file = $request->file("$key");   
+                $data["$key"] = 'file/'.$file->getClientOriginalName();                
+                $request->file("$key")->move("file/", $data["$key"]);
+            }            
+        }
+    }
+    
 }

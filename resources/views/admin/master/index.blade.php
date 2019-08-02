@@ -1,6 +1,14 @@
 @extends('admin.layouts.app')
 @push('css')
-
+    <style>
+        #datatables th,#datatables td, #datatables thead{
+            border : 1px solid #b9b9b9;
+            border-bottom: 1px solid #b9b9b9 !important;
+        }
+        #datatables th{
+            text-align: center;
+        }
+    </style>
 @endpush
 @section('content')
     @php
