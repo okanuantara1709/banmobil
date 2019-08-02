@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use Symfony\Component\HttpFoundation\Request;
-
+use Auth;
 trait ControllerTrait {
 
     public function formValidation(Request $r, $overide = [])
@@ -12,6 +12,7 @@ trait ControllerTrait {
         foreach ($this->form() as $form) {
             if($r->isMethod('post')){
                 if(array_key_exists('validation.store',$form)){
+                    
                     $validations[$form['name']] = $form['validation.store'];
                 }else{
                     $validations[$form['name']] = 'required';
@@ -37,6 +38,10 @@ trait ControllerTrait {
                 $request->file("$key")->move("file/", $data["$key"]);
             }            
         }
+    }
+
+    public function isAdmin(){
+        
     }
     
 }

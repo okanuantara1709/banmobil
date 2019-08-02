@@ -136,7 +136,7 @@
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Operator']))
+                    @if(AppHelper::access(['Operator','Admin']))
                         <li class="{{$template->menu == 'lpj' ? 'active' : ''}}">
                             <a href="{{route('admin.lpj.index')}}"  >
                                 <i class="fa fa-book"></i> 
@@ -168,7 +168,7 @@
                         </a>
                     </li>   
                     @endif
-                    @if(AppHelper::access(['Operator']))
+                    @if(AppHelper::access(['Operator','Admin']))
                         <li class="{{$template->menu == 'transaksi' ? 'active' : ''}}">
                             <a href="{{route('admin.transaksi.index')}}"  >
                                 <i class="fa fa-book"></i> 

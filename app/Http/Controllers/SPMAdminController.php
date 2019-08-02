@@ -31,8 +31,8 @@ class SPMAdminController extends Controller
             ->get();
         $status = [
             [
-                'value' => 'Diproses',
-                'name' => 'Diproses'
+                'value' => 'Pending',
+                'name' => 'Pending'
             ],
             [
                 'value' => 'Diterima',

@@ -7,6 +7,7 @@ use App\Helpers\ControllerTrait;
 use App\Rekening;
 use App\LPJ;
 use Alert;
+use Auth;
 
 class LPJController extends Controller
 {
@@ -17,7 +18,13 @@ class LPJController extends Controller
         'route' => 'admin.lpj',
         'menu' => 'lpj',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red'
+        'theme' => 'skin-red',
+        'config' => [
+            'index.create.is_show' => 'Operator',
+            'index.delete.is_show' => 'Operator',
+            'index.edit.is_show' => 'Operator',
+            
+        ]
     ];
 
     private function form()
@@ -147,6 +154,13 @@ class LPJController extends Controller
                 'format' => 'rupiah'
             ],
             [
+                'label' => 'Saldo Awal',
+                'name' => 'saldo_awal',
+                'value' => 1,
+                'type' => 'hidden',
+                'format' => 'rupiah'
+            ],
+            [
                 'label' => 'Saldo',
                 'name' => 'saldo',
                 'type' => 'text',
@@ -170,7 +184,13 @@ class LPJController extends Controller
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = LPJ::all();
+        if(Auth::guard()->user()->role == "Admin"){
+            $data = LPJ::all();
+        }else{
+            $data = LPJ::join('rekening','rekening.id','=','lpj.rekening_id')
+            ->join('satker','satker.id','=','rekening.satker_id')
+            ->where('satker.id',auth()->user()->satker_id)->get();
+        }
         return view('admin.master.index',compact('template','form','data'));
     }
 
