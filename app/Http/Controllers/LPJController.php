@@ -18,7 +18,7 @@ class LPJController extends Controller
         'route' => 'admin.lpj',
         'menu' => 'lpj',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red',
+        'theme' => 'skin-blue',
         'config' => [
             'index.create.is_show' => 'Operator',
             'index.delete.is_show' => 'Operator',
@@ -96,6 +96,14 @@ class LPJController extends Controller
             [
                 'label' => 'No Dokumen',
                 'name' => 'no_dokumen',
+                'type' => 'text'
+            ],
+            [
+                'label' => 'Saldo Awal',
+                'name' => 'saldo_awal',
+                'value' => 1,
+                'type' => 'hidden',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP Kas',
@@ -130,7 +138,7 @@ class LPJController extends Controller
                 'format' => 'rupiah'
             ],
             [
-                'label' => 'BP IS Bendahara',
+                'label' => 'BP LS Bendahara',
                 'name' => 'bp_is_bendahara',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
@@ -153,13 +161,7 @@ class LPJController extends Controller
                 'validation.update' => 'required|numeric',
                 'format' => 'rupiah'
             ],
-            [
-                'label' => 'Saldo Awal',
-                'name' => 'saldo_awal',
-                'value' => 1,
-                'type' => 'hidden',
-                'format' => 'rupiah'
-            ],
+            
             [
                 'label' => 'Saldo',
                 'name' => 'saldo',

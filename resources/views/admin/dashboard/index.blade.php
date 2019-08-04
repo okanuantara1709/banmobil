@@ -23,7 +23,7 @@
                 @if ( (int) \Carbon\Carbon::now()->format('d') < 11)
                     <div class="alert alert-danger" role="alert">
                         <h4 class="alert-heading">PERINGATAN</h4>
-                        <p>SILAKAN MELAKUKAN PELAPORAN LPJ</p>
+                        <p>SILAKAN MELAKUKAN PELAPORAN LAPORAN PERTANGGUNG JAWABAN </p>
                         <p class="mb-0"></p>
                     </div>
                 @endif

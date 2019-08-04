@@ -18,7 +18,7 @@ class TransaksiController extends Controller
         'route' => 'admin.transaksi',
         'menu' => 'transaksi',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red',
+        'theme' => 'skin-blue',
         'config' => [
             'index.create.is_show' => 'Operator',
             'index.delete.is_show' => 'Operator',
@@ -93,12 +93,12 @@ class TransaksiController extends Controller
             [
                 'label' => 'Nama Petugas',
                 'name' => 'nama_petugas',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Nominal',
                 'name' => 'nominal',
-                'view_index' => true,
+                'view_index' => false,
                 'validation.store' => 'required|numeric',
                 'validation.update' => 'required|numeric',
                 'format' => 'rupiah',
@@ -128,18 +128,33 @@ class TransaksiController extends Controller
             [
                 'label' => 'Nomor Cek',
                 'name' => 'no_cek',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Kategori',
                 'name' => 'kategori',
                 'type' => 'select',
                 'option' => $kategori,
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Status',
                 'name' => 'status',
+                'type' => 'select',
+                'option' => [
+                    [
+                        'value' => 'Sukses',
+                        'name' => 'Sukses'
+                    ],
+                    [
+                        'value' => 'Retur',
+                        'name' => 'Retur'
+                    ],
+                    [
+                        'value' => 'Gagal',
+                        'name' => 'Gagal'
+                    ]
+                ],
                 'view_index' => true
             ]
         ];

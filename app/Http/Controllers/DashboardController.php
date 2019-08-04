@@ -14,7 +14,7 @@ class DashboardController extends Controller
         'route' => 'dashboard',
         'menu' => 'dashboard',
         'icon' => 'fa fa-home',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ]; 
 
     public function index(Request $request)

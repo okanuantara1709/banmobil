@@ -17,7 +17,7 @@ class SPMAdminController extends Controller
         'route' => 'admin.spm-admin',
         'menu' => 'spm-admin',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-red',
+        'theme' => 'skin-blue',
         'config' => [
             'index.show.is_show' => false,
             'index.create.is_show' => false,
@@ -61,12 +61,12 @@ class SPMAdminController extends Controller
             [
                 'label' => 'Nomor Surat',
                 'name' => 'no_surat',
-                'view_index' => true,
+                'view_index' => false,
             ],
             [
                 'label' => 'Jenis SPM',
                 'name' => 'jenis_spm',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Nominal',
@@ -74,7 +74,7 @@ class SPMAdminController extends Controller
                 'validation.store' => 'required|numeric',
                 'validation.update' => 'required|numeric',
                 'format' => 'rupiah',
-                'view_index' => true
+                'view_index' => false
             ],
             [
                 'label' => 'Status',

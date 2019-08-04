@@ -17,7 +17,7 @@ class RekonsiliasiController extends Controller
         'route' => 'admin.rekonsiliasi',
         'menu' => 'rekonsiliasi',
         'icon' => 'fa fa-handshake-o',
-        'theme' => 'skin-red'
+        'theme' => 'skin-blue'
     ];
 
     private $kategori = [
@@ -72,6 +72,7 @@ class RekonsiliasiController extends Controller
             'Desember'
         ];
         $data = [];
+        $lpj = [];
         $satker = SatuanKerja::all();
         $lpj = [];
         
@@ -110,8 +111,9 @@ class RekonsiliasiController extends Controller
                         'status' => $lpj->{$this->convertKategori($kategori['name'])} == 0.0 ? 'SESUAI' : 'TIDAK SESUAI'
                     ];
                 }
+                // dd($transaksi);
                 foreach($transaksi as $item){
-                    $total =  $item->total_pemasukan - $item->total_pengeluaran;
+                    $total =  $item->total_pemasukan - $item->total_pengeluaran;                    
                     $data[$item->kategori]['hasil_transaksi'] = $total;
                     $data[$item->kategori]['status'] = $total === $data[$item->kategori]['hasil_lpj'] ? 'SESUAI' : 'TIDAK SESUAI';
                 }
