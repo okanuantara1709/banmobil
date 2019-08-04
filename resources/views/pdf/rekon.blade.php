@@ -58,8 +58,8 @@
         <img src="{{config('kppn.logo')}}" width="80%" alt="">
     </div>
     <div class="text">
-        <div class="title bold">KEMENTERIAN KEUANGAN REPUBLIK INDONESIA</div>
-        <div class="title">DIREKTORAT JENDERAL PERBENDAHARAAN</div>
+        <div class="title bold">KEMENTRIAN KEUANGAN REPUBLIK INDONESIA</div>
+        <div class="title bold">DIREKTORAT JENDERAL PERBENDAHARAAN</div>
         <div class="title bold">KANTOR PELAYANAN PERBENDAHARAAN NEGARA DENPASAR</div>
         <br>
         <div class="sub-title">Gedung Keuangan Negara I</div>
@@ -69,15 +69,15 @@
     </div>
 </div>
 <div class="section text-center">
-    <div class="section-text">BERITA ACARA REKONSILIASI REKENIK MILIK SATUAN KERJA LINGKUP KEMENTERIAN NEGARA / LEMBAGA</div>
-    <div class="section-text">ANATARA</div>
+    <div class="section-text">BERITA ACARA REKONSILIASI REKENING MILIK SATUAN KERJA LINGKUP KEMENTRIAN NEGARA / LEMBAGA</div>
+    <div class="section-text">ANTARA</div>
     <div class="section-text">KPPN DENPASAR</div>
     <div class="section-text">DENGAN</div>
     <div class="section-text">{{$satkerSelected->nama_satker}}</div>
 </div>
 <br>
 <div class="section">
-    Pada hari ini tanggal {{date('d-m-Y')}} telah dilakukan Rekonsiliasi Data Rekning Milik Satuan Kerja Lingkip Kementerian Negara / Lembaga yang selanjutnya disebut sebagai Rekening Antara KPPN Denpasar dengan {{$satkerSelected->nama_satker}} sampai dengan bulan {{$bulan}} {{$tahun}}:
+    Pada hari ini tanggal {{date('d-m-Y')}} telah dilakukan Rekonsiliasi Data Rekening Milik Satuan Kerja Lingkup Kementerian Negara / Lembaga yang selanjutnya disebut sebagai Rekening Antara KPPN Denpasar dengan {{$satkerSelected->nama_satker}} sampai dengan bulan {{$bulan}} {{$tahun}}:
 </div>
 <br>
 <table class="table">

@@ -7,6 +7,7 @@ use App\Helpers\ControllerTrait;
 use App\Rekening;
 use App\LPJ;
 use Alert;
+use Auth;
 
 class LPJController extends Controller
 {
@@ -17,7 +18,13 @@ class LPJController extends Controller
         'route' => 'admin.lpj',
         'menu' => 'lpj',
         'icon' => 'fa fa-book',
-        'theme' => 'skin-blue'
+        'theme' => 'skin-blue',
+        'config' => [
+            'index.create.is_show' => 'Operator',
+            'index.delete.is_show' => 'Operator',
+            'index.edit.is_show' => 'Operator',
+            
+        ]
     ];
 
     private function form()
@@ -89,6 +96,14 @@ class LPJController extends Controller
             [
                 'label' => 'No Dokumen',
                 'name' => 'no_dokumen',
+                'type' => 'text'
+            ],
+            [
+                'label' => 'Saldo Awal',
+                'name' => 'saldo_awal',
+                'value' => 1,
+                'type' => 'hidden',
+                'format' => 'rupiah'
             ],
             [
                 'label' => 'BP Kas',
@@ -123,7 +138,7 @@ class LPJController extends Controller
                 'format' => 'rupiah'
             ],
             [
-                'label' => 'BP IS Bendahara',
+                'label' => 'BP LS Bendahara',
                 'name' => 'bp_is_bendahara',
                 'type' => 'text',
                 'validation.store' => 'required|numeric',
@@ -146,6 +161,7 @@ class LPJController extends Controller
                 'validation.update' => 'required|numeric',
                 'format' => 'rupiah'
             ],
+            
             [
                 'label' => 'Saldo',
                 'name' => 'saldo',
@@ -170,7 +186,13 @@ class LPJController extends Controller
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = LPJ::all();
+        if(Auth::guard()->user()->role == "Admin"){
+            $data = LPJ::all();
+        }else{
+            $data = LPJ::join('rekening','rekening.id','=','lpj.rekening_id')
+            ->join('satker','satker.id','=','rekening.satker_id')
+            ->where('satker.id',auth()->user()->satker_id)->get();
+        }
         return view('admin.master.index',compact('template','form','data'));
     }
 

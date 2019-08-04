@@ -210,14 +210,24 @@ class AppHelper{
 
     public static function config(Array $conf = [], $key)
     {
-        $default = [
-            'index.show.is_show' => true,
-            'index.create.is_show' => true,
-            'index.delete.is_show' => true,
-            'index.edit.is_show' => true
-        ];
         
-        $config = array_merge($default, $conf);
-        return $config[$key];
+        if(!empty($conf[$key])){
+            if(is_bool($conf[$key])){
+                return $conf[$key];
+            }else{
+                $role = Auth::guard()->user()->role;
+                return $role == $conf[$key] ? true : false;   
+            }         
+        }else{
+            $default = [
+                'index.show.is_show' => true,
+                'index.create.is_show' => true,
+                'index.delete.is_show' => true,
+                'index.edit.is_show' => true
+            ];
+            
+            $config = array_merge($default, $conf);
+            return $config[$key];
+        }
     }
 }
