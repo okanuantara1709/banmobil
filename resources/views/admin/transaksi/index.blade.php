@@ -38,13 +38,13 @@
                         </div>
                         <div class="box-body">
                             <div class="row">
-                                <form action="{{route('admin.rekonsiliasi.index')}}" method="GET" id="formRekon">
+                                <form action="{{route('admin.transaksi.index')}}" method="GET" id="form">
                                     <input type="hidden" name="download" value="false" id="download">
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="">Satuan Kerja</label>
                                             <select name="satker" id="satker" class="form-control">
-                                                <option value="">-- pilih --</option>
+                                                <option value="all">Semua</option>
                                                 @foreach ($satker as $item)
                                                     <option value="{{$item->id}}" {{request('satker') == $item->id ? 'selected' : ''}}>{{$item->nama_satker}}</option>
                                                 @endforeach
@@ -55,7 +55,7 @@
                                         <div class="form-group">
                                             <label for="">Rekening</label>
                                             <select name="rekening" id="rekening" class="form-control">
-                                               <option value="">-- pilih --</option>
+                                               <option value="all">Semua</option>
                                                @foreach ($rekening as $item)
                                                    <option value="{{$item->id}}" {{request('rekening') == $item->id ? 'selected' : ''}}>{{$item->nama_rekening}}</option>
                                                @endforeach
@@ -66,6 +66,7 @@
                                         <div class="form-group">
                                             <label for="">Tahun</label>
                                             <select name="tahun" class="form-control" id="tahun">
+                                                <option value="all">Semua</option>
                                                 @foreach ($tahun as $item)
                                                     <option value="{{$item}}" {{request('tahun') == $item? 'selected' : ''}}>{{$item}}</option>
                                                 @endforeach
@@ -76,13 +77,34 @@
                                         <div class="form-group">
                                             <label for="">Bulan</label>
                                             <select name="bulan" id="bulan" class="form-control">
-                                                <option value="">-- pilih --</option>
-                                                @foreach ($bln as $item)
-                                                    <option value="{{$item}}" {{request('bulan') == $item ? 'selected' : ''}}>{{$item}}</option>
+                                                <option value="all">Semua</option>
+                                                @foreach ($bln as $key => $item)
+                                                    <option value="{{$key}}" {{request('bulan') == $key ? 'selected' : ''}}>{{$item}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="">Kategori</label>
+                                            <select name="kategori" id="kategori" class="form-control">
+                                                <option value="all">Semua</option>
+                                                @foreach ($kategori as $item)
+                                                    <option value="{{$item['value']}}" {{request('status') == $item['value'] ? 'selected' : ''}}>{{$item['value']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Metode Pembayaran</label>
+                                                <select name="metode" id="metode" class="form-control">
+                                                    <option value="all">Semua</option>
+                                                    <option value="Transfer" {{request('metode') == 'Transfer' ? 'selected' : '' }}>Transfer</option>
+                                                    <option value="Cek" {{request('metode') == 'Cek' ? 'selected' : ''}}>Cek</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                 </form>
                             </div>
                             <br>
@@ -96,24 +118,48 @@
                                     <button class="btn btn-primary btn-sm" onclick="printDiv()"><i class="fa fa-print"></i> Cetak</button>
                                     <br>
                                     <br>
-                                    <table class="table table-border" id="tableRekonsiliasi">
+                                    <table class="table" id="datatables">
                                         <thead>
                                             <tr>
-                                                <th>LPJ No : {{$lpj->no_dokumen}}</th>
-                                                <th>Hasil Transaksi</th>
-                                                <th>Hasil LPJ</th>
-                                                <th>Status</th>
+                                                <td>No.</td>
+                                                @foreach ($form as $item)
+                                                    @if (array_key_exists('view_index',$item) && $item['view_index'])
+                                                        <td>{{$item['label']}}</td>
+                                                    @endif
+                                                @endforeach
+                                                <td>Opsi</td>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($kategori as $item)
+                                            @foreach($data as $key => $row)
                                                 <tr>
-                                                    <td>{{$item['name']}}</td>
-                                                    <td style="text-align:right">Rp. {{number_format($data[$item['name']]['hasil_transaksi'],2,',','.')}}</td>
-                                                    <td style="text-align:right">Rp. {{number_format($data[$item['name']]['hasil_lpj'],2,',','.')}}</td>
-                                                    <td>{{$data[$item['name']]['status']}}</td>
+                                                    <td>{{$key+1}}</td>
+                                                    @foreach ($form as $item)
+                                                        @if (array_key_exists('view_index',$item) && $item['view_index'])
+                                                            <td @if(array_key_exists('format',$item) && $item['format'] == 'rupiah') style="text-align:right" @endif>
+                                                                @if (array_key_exists('view_relation',$item))
+                                                                {{ AppHelper::viewRelation($row,$item['view_relation']) }}
+                                                                @else
+                                                                    @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                                                    Rp. {{number_format($row->{$item['name']},2,',','.')}}
+                                                                    @else
+                                                                    {{ $row->{$item['name']} }}
+                                                                    @endif
+                                                                @endif
+                                                            </td>
+                                                        @endif
+                                                    @endforeach
+                                                    <td>
+                                                        <a href="{{route("$template->route".'.edit',[$row->id])}}" class="btn btn-success btn-sm {{AppHelper::config($config,'index.edit.is_show') ? '' : 'hidden'}}">Ubah</a>
+                                                        <a href="{{route("$template->route".'.show',[$row->id])}}" class="btn btn-info btn-sm {{AppHelper::config($config,'index.show.is_show') ? '' : 'hidden'}}">Lihat</a>
+                                                        <a href="#" class="btn btn-danger btn-sm {{AppHelper::config($config,'index.delete.is_show') ? '' : 'hidden'}}" onclick="confirm('Lanjutkan ?') ? $('#frmDelete{{$row->id}}').submit() : ''">Hapus</a>
+                                                        <form action="{{route("$template->route".'.destroy',[$row->id])}}" method="POST" id="frmDelete{{$row->id}}">
+                                                            {{ csrf_field() }}
+                                                            @method('DELETE')
+                                                        </form>
+                                                    </td>
                                                 </tr>
-                                            @endforeach                                               
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     @endif
@@ -133,14 +179,14 @@
     <!-- page script -->
     <script>
     $(function () {
-        $('#satker,#rekening,#tahun,#bulan').on('change', function(){
-           $('#formRekon').submit();
+        $('#satker,#rekening,#tahun,#bulan,#kategori,#metode').on('change', function(){
+           $('#form').submit();
         });
     })
 
     function printDiv(){
        $('#download').val(true);
-       $('#formRekon').submit();
+       $('#form').submit();
     }
     </script>
 @endpush
