@@ -7,6 +7,9 @@ use App\Helpers\ControllerTrait;
 use App\SPM;
 use Alert;
 use App\Rekening;
+use App\SatuanKerja;
+use Illuminate\Support\Facades\DB;
+use Mpdf\Mpdf;
 
 class SPMAdminController extends Controller
 {
@@ -61,12 +64,12 @@ class SPMAdminController extends Controller
             [
                 'label' => 'Nomor Surat',
                 'name' => 'no_surat',
-                'view_index' => false,
+                'view_index' => true,
             ],
             [
                 'label' => 'Jenis SPM',
                 'name' => 'jenis_spm',
-                'view_index' => false
+                'view_index' => true
             ],
             [
                 'label' => 'Nominal',
@@ -74,7 +77,7 @@ class SPMAdminController extends Controller
                 'validation.store' => 'required|numeric',
                 'validation.update' => 'required|numeric',
                 'format' => 'rupiah',
-                'view_index' => false
+                'view_index' => true
             ],
             [
                 'label' => 'Status',
@@ -90,12 +93,74 @@ class SPMAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = SPM::all();
-        return view('admin.master.index',compact('template','form','data'));
+        $satker = SatuanKerja::all();
+        $rekening = [];
+        $tahun = [2016,2017,2018,2019];
+        $status = [
+            [
+                'value' => 'Pending',
+                'name' => 'Pending'
+            ],
+            [
+                'value' => 'Diterima',
+                'name' => 'Diterima'
+            ],
+            [
+                'value' => 'Ditolak',
+                'name' => 'Ditolak'
+            ]
+        ];
+        $bln = [
+            1 => 'Januari',
+            2 => 'Februari',
+            3 => 'Maret',
+            4 => 'April',
+            5 => 'Mei',
+            6 => 'Juni',
+            7 => 'Juli',
+            8 => 'Agustus',
+            9 => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember'
+        ];
+
+        if($request->has('satker')){
+            $rekening = Rekening::where('satker_id',$request->satker)
+                ->get();
+        }
+
+        $spm = SPM::select(DB::raw('spm.*'))
+            ->join('rekening','rekening.id','=','spm.rekening_id')
+            ->join('satker','satker_id','=','rekening.satker_id');
+        if($request->has('satker') && $request->satker != 'all'){
+            $spm->where('satker.id',$request->satker);
+        }
+        if($request->has('rekening') && $request->rekening != 'all'){
+            $spm->where('rekening.id',$request->rekening);
+        }
+        if($request->has('tahun') && $request->tahun != 'all'){
+            $spm->whereYear('spm.tanggal_surat',$request->tahun);
+        }
+        if($request->has('bulan') && $request->bulan != 'all'){
+            $spm->whereMonth('spm.tanggal_surat',$request->bulan);
+        }
+        if($request->has('status') && $request->status != 'all'){
+            $spm->where('spm.status',$request->status);
+        }
+        $data = $spm->get();
+        if($request->has('download') && $request->download == 'true'){
+            $view = view('pdf.spm',compact('template','form','data','satker','rekening','tahun','bln','status'))->render();
+            $pdf = new Mpdf();
+            $pdf->WriteHTML($view);
+            return $pdf->Output('SPM.pdf',\Mpdf\Output\Destination::INLINE);
+        }else{
+            return view('admin.spm.index',compact('template','form','data','satker','rekening','tahun','bln','status'));
+        }
     }
 
     /**
