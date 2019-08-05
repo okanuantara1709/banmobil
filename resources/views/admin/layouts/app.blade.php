@@ -176,7 +176,7 @@
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Admin']))
+                    @if(AppHelper::access(['Admin','Operator']))
                         <li class="{{$template->menu == 'rekonsiliasi' ? 'active' : ''}}">
                             <a href="{{route('admin.rekonsiliasi.index')}}"  >
                                 <i class="fa fa-handshake-o"></i> 

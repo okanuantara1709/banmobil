@@ -9,6 +9,7 @@ use App\LPJ;
 use App\Transaksi;
 use DB;
 use Mpdf\Mpdf;
+use Illuminate\Support\Facades\Auth;
 
 class RekonsiliasiController extends Controller
 {
@@ -73,7 +74,12 @@ class RekonsiliasiController extends Controller
         ];
         $data = [];
         $lpj = [];
-        $satker = SatuanKerja::all();
+        if(Auth::user()->role == "Admin"){
+            $satker = SatuanKerja::all();
+        }else{
+            $satker = SatuanKerja::where('id',Auth::user()->satker_id)
+                ->get();
+        }
         $lpj = [];
         
         if($request->has('satker')){
