@@ -142,6 +142,23 @@ class DashboardController extends Controller
                    $pp->whereRaw("MONTH(transaksi.tgl_transaksi) = $pp_bulan");
                }
                $pp = $pp->get();
+
+               $tr = DB::table('transaksi')
+                ->select(DB::raw('
+                    satker.nama_satker,
+                    SUM(CASE WHEN transaksi.status = "Sukses" THEN 1 ELSE 0 END) AS sukses,
+                    SUM(CASE WHEN transaksi.status = "Gagal" THEN 1 ELSE 0 END) AS gagal,
+                    SUM(CASE WHEN transaksi.status = "Retur" THEN 1 ELSE 0 END) AS retur
+                '))
+                ->join('rekening','rekening.id','=','transaksi.rekening_id')
+                ->join('satker','satker.id','=','rekening.satker_id')
+                ->groupBy('satker.id')
+                ->where('satker.id',auth()->user()->satker_id)
+                ->whereRaw("YEAR(transaksi.tgl_transaksi) = $tr_tahun");
+            if(!$tr_tahunan){
+                $tr->whereRaw("MONTH(transaksi.tgl_transaksi) = $tr_bulan");
+            }
+            $tr = $tr->get();
         }
 
         $template = (object) $this->template;
