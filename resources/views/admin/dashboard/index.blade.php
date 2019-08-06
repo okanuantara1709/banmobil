@@ -143,6 +143,63 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <div class="box box-default">
+                        <div class="box-header">
+                            <div class="box-title">
+                                Transaksi
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form action="{{url('admin/dashboard')}}" method="get" id="form_tr">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Tahun</label>
+                                                <select name="tr_tahun" id="tr_tahun" class="form-control">
+                                                    @for ($i = 2016; $i <= 2019; $i++)
+                                                        <option value="{{$i}}" {{request('tr_tahun') == $i ? 'selected' : ''}}>{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" id="tr_tahunan" name="tr_tahunan" {{request('tr_tahunan') == 'on' ? 'checked' : ''}}> Tampilkan tahunan
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="">Bulan</label>
+                                                <select name="tr_bulan" id="tr_bulan" class="form-control">
+                                                    @foreach ($bln as $key => $item)
+                                                        <option value="{{$key}}" {{request('tr_bulan') == $key ? 'selected' : ''}}>{{$item}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="row" id="appTR">
+                                        <h1 style="text-align:center" v-if="charts.length == 0">Tidak Ada Data</h1>
+                                        <chart v-for="(data,index) in charts" :key="index" :data="data">
+
+                                        </chart>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul class="chart-legend clearfix">
+                                        <li><i class="fa fa-circle-o text-red"></i> Gagal</li>
+                                        <li><i class="fa fa-circle-o text-green"></i> Sukses</li>
+                                        <li><i class="fa fa-circle-o text-yellow"></i> Retur</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- /.content -->
@@ -259,6 +316,60 @@
                 }
             }
         });
+
+        var appTR = new Vue({
+            el: '#appTR',
+            data: {
+                charts: JSON.parse('{!! json_encode($tr) !!}')
+            },
+            components: {
+                'chart' : {
+                    template: '#template',
+                    props: ['data'],
+                    mounted(){
+                        var canvas = $(this.$refs.canva).get(0).getContext('2d');
+                        var chart = new Chart(canvas);
+                        var pieData = [
+                            {
+                                value    : this.data.gagal,
+                                color    : '#f56954',
+                                highlight: '#f56954',
+                                label    : 'Transaksi Gagal'
+                            },
+                            {
+                                value    : this.data.sukses,
+                                color    : '#00a65a',
+                                highlight: '#00a65a',
+                                label    : 'Transaksi Sukses'
+                            },
+                            {
+                                value    : this.data.retur,
+                                color    : '#f39c12',
+                                highlight: '#f39c12',
+                                label    : 'Transaksi Retur'
+                            }
+                        ];
+                        var pieOptions     = {
+                            segmentShowStroke    : true,
+                            segmentStrokeColor   : '#fff',
+                            segmentStrokeWidth   : 1,
+                            percentageInnerCutout: 50,
+                            animationSteps       : 100,
+                            animationEasing      : 'easeOutBounce',
+                            animateRotate        : true,
+                            animateScale         : false,
+                            responsive           : true,
+                            maintainAspectRatio  : false,
+                            legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+                            tooltipTemplate      : '<%=value %> <%=label%>'
+                        };
+
+                        chart.Doughnut(pieData,pieOptions);
+                    }
+                }
+            }
+        });
+
         $(function(){
             $('#tahun,#bulan,#tahunan').on('change',function(){
                 $('#form').submit();
@@ -266,6 +377,10 @@
 
             $('#pp_tahun,#pp_bulan,#pp_tahunan').on('change',function(){
                 $('#form_pp').submit();
+            });
+
+            $('#tr_tahun,#tr_bulan,#tr_tahunan').on('change',function(){
+                $('#form_tr').submit();
             });
         });
     </script>

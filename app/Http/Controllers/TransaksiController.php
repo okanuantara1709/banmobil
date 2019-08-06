@@ -34,6 +34,7 @@ class TransaksiController extends Controller
         $satker = Rekening::select('id as value','nama_rekening as name')
             ->where('satker_id',auth()->user()->satker_id)
             ->get();
+        
         $kategori = [
             [
                 'value' => 'BP KAS',
