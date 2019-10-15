@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Revisi2 extends Migration
+class CreateAgencyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class Revisi2 extends Migration
      */
     public function up()
     {
-        Schema::table('lpj',function(Blueprint $table){
-            $table->text('file')->nullable();
-        });
-
-        Schema::table('spm',function(Blueprint $table){
-            $table->text('file')->nullable();
+        Schema::create('agency', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name',50);
+            $table->string('phone');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +28,6 @@ class Revisi2 extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('agency');
     }
 }

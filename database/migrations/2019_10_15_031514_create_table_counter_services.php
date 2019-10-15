@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRekeningsTable extends Migration
+class CreateTableCounterServices extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateRekeningsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rekening', function (Blueprint $table) {
+        Schema::create('counter_services', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('satker_id')->unsigned();
-            $table->string('nama_rekening');
-            $table->string('no_rekening');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('services_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('services_id')->references('id')->on('services');
             $table->timestamps();
-            $table->softDeletes();
-
-            $table->foreign('satker_id')->references('id')->on('satker');
         });
     }
 
@@ -32,6 +30,6 @@ class CreateRekeningsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rekening');
+        Schema::dropIfExists('counter_services');
     }
 }
