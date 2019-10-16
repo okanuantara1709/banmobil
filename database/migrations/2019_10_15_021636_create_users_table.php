@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('username',50);
             $table->string('password');
             $table->string('phone');
-            $table->string('status');
+            $table->boolean('status');
             $table->bigInteger('agency_id')->unsigned();
             $table->timestamps();
             $table->foreign('agency_id')->references('id')->on('agency');
