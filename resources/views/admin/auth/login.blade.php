@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>KPPN | Log in</title>
+    <title>MPP | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -29,12 +29,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition login-page" style="background-image : url('{{asset("image/logo-login.jpeg")}}');background-size: cover;  ">
+<body class="hold-transition login-page" style="background-image : url('{{asset("image/logo-login.jpeg")}}');background-size: cover; height: auto  ">
     <div class="login-box">
-        {{-- <div class="login-logo">
-            <img src="{{asset('image/logo.png')}}" alt="" width="120px">
-        </div> --}}
-        <h3 class="text-center" style="color : white">KPPN</h3>
+        <div class="login-logo">
+            <img src="{{asset('img/logo.png')}}" alt="" width="190px">
+        </div>
+        {{-- <h3 class="text-center" style="color : white">KPPN</h3> --}}
         <!-- /.login-logo -->
         {{-- Memunculkan alert pemberitahuan --}}
         {!!Alert::showBox()!!}   
