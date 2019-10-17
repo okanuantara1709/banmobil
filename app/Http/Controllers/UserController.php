@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\SatuanKerja;
+use App\Agency;
 use App\Helpers\ControllerTrait;
 use Alert;
 
@@ -41,8 +41,7 @@ class UserController extends Controller
             ]
         ];
 
-        $satker = SatuanKerja::select('id as value','nama_satker as name')
-            ->where('status','Aktif')
+        $agency = Agency::select('id as value','name as name')
             ->get();
 
         return [
@@ -60,10 +59,10 @@ class UserController extends Controller
                 'view_relation' => 'satuan_kerja->nama_satker'
             ],
             [
-                'label' => 'Email',
-                'name' => 'email',
+                'label' => 'Username',
+                'name' => 'username',
                 'view_index' => false,
-                'validation.store' => 'required|unique:user,email'
+                'validation.store' => 'required|unique:users,username'
             ],
             [
                 'label' => 'Password',
