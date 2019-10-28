@@ -11,7 +11,7 @@
             float: left;
             width: 15%;
             box-sizing: border-box;
-            padding-top: 30px;
+            
         }
         .text{
             float: left;
@@ -58,14 +58,9 @@
             <img src="{{config('kppn.logo')}}" width="80%" alt="">
         </div>
         <div class="text">
-            <div class="title bold">KEMENTRIAN KEUANGAN REPUBLIK INDONESIA</div>
-            <div class="title bold">DIREKTORAT JENDERAL PERBENDAHARAAN</div>
-            <div class="title bold">KANTOR PELAYANAN PERBENDAHARAAN NEGARA DENPASAR</div>
-            <br>
-            <div class="sub-title">Gedung Keuangan Negara I</div>
-            <div class="sub-title">Jalan Dr Kusuma Atmaja Denpasar</div>
-            <div class="sub-title">Telepon 0361 - 225592, Faksimile 0361 - 225591</div>
-            <div class="sub-title">Email : Website : www.kppndenpasar.depkeu.go.id</div>
+            <div class="title bold">GARMEN</div>
+            <div class="title bold">NAMA GARMEN</div>
+            <div class="title bold"></div>
         </div>
     </div>
     <div class="section text-center">
@@ -120,12 +115,12 @@
     <br>
     <br>
     <div class="tte-left">
-       <div>An. Direktur Pengelolaan Kas Negara</div>
+       <div>Garmen</div>
        <div>Kepala KPPN DENPASAR</div>
        <br>
        <br>
-       <div>TEDDY</div>
-       <div>NIP. 197011291997031001</div>
+       <div>Nama Pemilik Garnen</div>
+       <div>197011291997031001</div>
     </div>
     
     {{-- <div class="tte-right">

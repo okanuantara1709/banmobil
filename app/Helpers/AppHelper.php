@@ -230,4 +230,13 @@ class AppHelper{
             return $config[$key];
         }
     }
+
+    public static function numberOnly($a) {
+        $str1 = $a;
+        $x = str_replace( ',', '', $str1);
+        if( is_numeric($x))
+        {
+            return $x;
+        }
+    }
 }

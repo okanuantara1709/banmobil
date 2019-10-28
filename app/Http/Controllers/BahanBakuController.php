@@ -3,20 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Agency;
+use App\BahanBaku;
 use App\Helpers\ControllerTrait;
-use Alert;
+use App\Helpers\Alert;
 
-class UserController extends Controller
+class BahanBakuController extends Controller
 {
     use ControllerTrait;
 
     private $template = [
-        'title' => 'User',
-        'route' => 'admin.user',
-        'menu' => 'user',
-        'icon' => 'fa fa-users',
+        'title' => 'Bahan Baku',
+        'route' => 'admin.bahan-baku',
+        'menu' => 'bahan-baku',
+        'icon' => 'fa fa-group',
         'theme' => 'skin-blue',
         'config' => [
             'index.delete.is_show' => false
@@ -25,9 +24,9 @@ class UserController extends Controller
 
     private function form()
     {
-        $role = [
-            ['value' => 'Operator','name' => 'Operator'],
-            ['value' => 'Admin','name' => 'Admin'],
+        $satuan = [
+            ['value' => 'Kg','name' => 'Kg'],
+            ['value' => 'Meter','name' => 'Meter'],
         ];
 
         $status = [
@@ -43,37 +42,29 @@ class UserController extends Controller
 
         return [
             [
-                'label' => 'Nama User', 
+                'label' => 'Nama Bahan',
                 'name' => 'nama',
-                'view_index' => true
-            ],
-            [
-                'label' => 'Username',
-                'name' => 'username',
                 'view_index' => true,
-                'validation.store' => 'required|unique:users,username'
             ],
             [
-                'label' => 'Password',
-                'name' => 'password',
-                'type' => 'password',
-                'validation.store' => 'required|confirmed',
-                'validation.update' => ''
-            ],
-            [
-                'label' => 'Role',
-                'name' => 'role',
+                'label' => 'Satuan',
+                'name' => 'satuan',
+                'view_index' => true,
                 'type' => 'select',
-                'option' => $role,
+                'option' => $satuan
+            ],
+            [
+                'label' => 'Jumlah',
+                'name' => 'jumlah',
+                'type' => 'number',
                 'view_index' => true,
-                'validation.store' => 'required'
             ],
             [
                 'label' => 'Status',
                 'name' => 'status',
+                'view_index' => true,
                 'type' => 'select',
-                'option' => $status,
-                'view_index' => true
+                'option' => $status
             ]
         ];
     }
@@ -86,7 +77,7 @@ class UserController extends Controller
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = User::all();
+        $data = BahanBaku::all();
         return view('admin.master.index',compact('template','form','data'));
     }
 
@@ -110,15 +101,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->formValidation($request);
         $data = $request->all();
-        if($data['password'] == $data['password_confirmation']){
-            $data['password'] = bcrypt($data['password']);
-            unset($data['password_confirmation']);
-            User::create($data);
-        }else{
-            Alert::make('danger','Password tidak sama');
-            redirect()->back();
-        }
+        BahanBaku::create($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
     }
@@ -131,10 +116,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $data = BahanBaku::find($id);
         $template = (object) $this->template;
         $form = $this->form();
-        $data = User::find($id);
-        return view('admin.master.show',compact('template','form','data'));
+        return view('admin.master.show',compact('data','template','form'));
     }
 
     /**
@@ -145,10 +130,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $data = BahanBaku::find($id);
         $template = (object) $this->template;
         $form = $this->form();
-        $data = User::find($id);
-        return view('admin.master.edit',compact('template','form','data'));
+        return view('admin.master.edit',compact('data','template','form'));
     }
 
     /**
@@ -161,17 +146,10 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->formValidation($request);
-        $data = $request->all();
-        if(trim($request->password) != ''){
-            $data['password'] = bcrypt($request->password);
-        }else{
-            unset($data['password']);
-        }
-        unset($data['password_confirmation']);
-        User::find($id)
-            ->update($data);
+        BahanBaku::find($id)
+            ->update($request->all());
         Alert::make('success','Berhasil simpan data');
-        return redirect(route($this->template['route'].'.index'));    
+        return redirect(route($this->template['route'].'.index'));
     }
 
     /**
@@ -182,36 +160,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)
+        BahanBaku::find($id)
             ->delete();
         Alert::make('success','Berhasil simpan data');
-        return redirect(route($this->template['route'].'.index'));    
-    }
-
-    public function profile()
-    {
-        $template = (object) $this->template;
-        $form = $this->form();
-        $data = User::find(auth()->user()->id);
-        return view('admin.master.profile',compact('template','form','data'));
-    }
-
-    public function setProfile(Request $request)
-    {
-        $this->formValidation($request,[
-            'email' => 'required|unique:user,email,'.auth()->user()->id,
-            'password' => 'nullable'
-        ]);
-        $data = $request->all();
-        if(trim($request->password) != ''){
-            $data['password'] = bcrypt($request->password);
-        }else{
-            unset($data['password']);
-        }
-        unset($data['password_confirmation']);
-        User::find(auth()->user()->id)
-            ->update($data);
-        Alert::make('success','Berhasil simpan data');
-        return back();  
+        return redirect(route($this->template['route'].'.index'));
     }
 }

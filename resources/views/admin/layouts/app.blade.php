@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ADMIN</title>
+    <title>Garmen</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -52,7 +52,7 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>KPPN</b></span>
+                <span class="logo-lg"><b>Garmen</b></span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -120,14 +120,7 @@
                         </a>
                     </li>
                     {{-- //menentukan hak akses user --}}
-                    @if(AppHelper::access(['Admin']))
-                        <li class="{{$template->menu == 'satuan-kerja' ? 'active' : ''}}">
-                            <a href="{{route('admin.satuan-kerja.index')}}"  >
-                                <i class="fa fa-group"></i> 
-                                <span>Satuan Kerja</span>
-                            </a>
-                        </li>   
-                    @endif
+                    
                     @if(AppHelper::access(['Admin']))
                         <li class="{{$template->menu == 'user' ? 'active' : ''}}">
                             <a href="{{route('admin.user.index')}}"  >
@@ -136,54 +129,52 @@
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Operator','Admin']))
-                        <li class="{{$template->menu == 'lpj' ? 'active' : ''}}">
-                            <a href="{{route('admin.lpj.index')}}"  >
-                                <i class="fa fa-book"></i> 
-                                <span>LPJ</span>
+
+                    @if(AppHelper::access(['Admin','Operator']))
+                        <li class="{{$template->menu == 'bahan-baku' ? 'active' : ''}}">
+                            <a href="{{route('admin.bahan-baku.index')}}"  >
+                                <i class="fa fa-folder"></i> 
+                                <span>Bahan Baku</span>
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Admin']))
-                        <li class="{{$template->menu == 'rekening' ? 'active' : ''}}">
-                            <a href="{{route('admin.rekening.index')}}"  >
-                                <i class="fa fa-book"></i> 
-                                <span>Rekening</span>
+
+                    @if(AppHelper::access(['Admin','Operator']))
+                        <li class="{{$template->menu == 'barang' ? 'active' : ''}}">
+                            <a href="{{route('admin.barang.index')}}"  >
+                                <i class="fa fa-file"></i> 
+                                <span>Barang</span>
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Admin']))
-                        <li class="{{$template->menu == 'spm-admin' ? 'active' : ''}}">
-                            <a href="{{route('admin.spm-admin.index')}}"  >
-                                <i class="fa fa-book"></i> 
-                                <span>SPM</span>
+
+                    @if(AppHelper::access(['Admin','Operator']))
+                        <li class="{{$template->menu == 'pelanggan' ? 'active' : ''}}">
+                            <a href="{{route('admin.pelanggan.index')}}"  >
+                                <i class="fa fa-users"></i> 
+                                <span>Pelanggan</span>
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Operator']))
-                    <li class="{{$template->menu == 'spm' ? 'active' : ''}}">
-                        <a href="{{route('admin.spm.index')}}"  >
-                            <i class="fa fa-book"></i> 
-                            <span>SPM</span>
-                        </a>
-                    </li>   
+
+                    @if(AppHelper::access(['Admin','Operator']))
+                        <li class="{{$template->menu == 'produksi' ? 'active' : ''}}">
+                            <a href="{{route('admin.produksi.index')}}"  >
+                                <i class="fa fa-circle"></i> 
+                                <span>Produksi</span>
+                            </a>
+                        </li>   
                     @endif
-                    @if(AppHelper::access(['Operator','Admin']))
+
+                    @if(AppHelper::access(['Admin','Operator']))
                         <li class="{{$template->menu == 'transaksi' ? 'active' : ''}}">
                             <a href="{{route('admin.transaksi.index')}}"  >
-                                <i class="fa fa-book"></i> 
+                                <i class="fa fa-circle"></i> 
                                 <span>Transaksi</span>
                             </a>
                         </li>   
                     @endif
-                    @if(AppHelper::access(['Admin','Operator']))
-                        <li class="{{$template->menu == 'rekonsiliasi' ? 'active' : ''}}">
-                            <a href="{{route('admin.rekonsiliasi.index')}}"  >
-                                <i class="fa fa-handshake-o"></i> 
-                                <span>Rekonsiliasi</span>
-                            </a>
-                        </li>   
-                    @endif
+                    
                 </ul>
             </section>
             <!-- /.sidebar -->

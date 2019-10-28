@@ -32,9 +32,11 @@ class Render
     {
         $self = new Render;
         $self->method = $data == null ? 'add' : 'edit';
+
         foreach ($atributes as $key => $value) {
             $self->{$key} = $value;
         }
+
         if ($self->type == "text" || $self->type == "email" || $self->type == "number") {
             if (($self->method == 'add' && $self->hideAdd == false) || ($self->method == 'edit' && $self->hideEdit == false)) {
                 return $self->input($data);
@@ -94,6 +96,8 @@ class Render
     {
         // dd($data);
         $this->required = ($this->required == "required") ? "required='required'" : "";
+        
+        //TODO: Buat global variable helper
         if ($data == null) {
             if ($this->value == "") {
                 $value = old("$this->name");
@@ -247,7 +251,11 @@ class Render
         // dd($data);
         $this->required = ($this->required == "required") ? "required='required'" : "";
         if ($data == null) {
-            $value = old("$this->name");
+            if ($this->value == "") {
+                $value = old("$this->name");
+            } else {
+                $value = $this->value;
+            }
         } else {
             $value = $data->{$this->name};
         }

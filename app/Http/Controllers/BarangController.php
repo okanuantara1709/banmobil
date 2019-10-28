@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SatuanKerja;
+use App\Barang;
 use App\Helpers\ControllerTrait;
 use App\Helpers\Alert;
 
-class SatuanKerjaController extends Controller
+class BarangController extends Controller
 {
     use ControllerTrait;
 
     private $template = [
-        'title' => 'Satuan Kerja',
-        'route' => 'admin.satuan-kerja',
-        'menu' => 'satuan-kerja',
+        'title' => 'Barang',
+        'route' => 'admin.barang',
+        'menu' => 'barang',
         'icon' => 'fa fa-group',
         'theme' => 'skin-blue',
         'config' => [
@@ -24,9 +24,9 @@ class SatuanKerjaController extends Controller
 
     private function form()
     {
-        $role = [
-            ['value' => 'Admin','name' => 'Admin'],
-            ['value' => 'Operator','name' => 'Operator'],
+        $satuan = [
+            ['value' => 'Kg','name' => 'Kg'],
+            ['value' => 'Meter','name' => 'Meter'],
         ];
 
         $status = [
@@ -42,42 +42,21 @@ class SatuanKerjaController extends Controller
 
         return [
             [
-                'label' => 'Nama Satuan Kerja',
-                'name' => 'nama_satker',
+                'label' => 'Nama Barang',
+                'name' => 'nama',
+                'view_index' => true,
+            ],           
+            [
+                'label' => 'Jumlah',
+                'name' => 'jumlah',
+                'type' => 'number',
                 'view_index' => true,
             ],
             [
-                'label' => 'Alamat',
-                'name' => 'alamat',
-                'view_index' => false
-            ],
-            [
-                'label' => 'Email',
-                'name' => 'email',
-                'type' => 'email',
-                'view_index' => false,
-                'validation.store' => 'required|email'
-            ],
-            [
-                'label' => 'Telepon',
-                'name' => 'telepon',
-                'view_index' => false
-            ],
-            [
-                'label' => 'Lembaga Kementrian',
-                'name' => 'kementrian_lembaga',
-                'view_index' => false
-            ],
-            [
-                'label' => 'No KRWS & Kewenangan',
-                'name' => 'no_krws_dan_kewenangan',
-                'type' => 'textarea',
-                'view_index' => false
-            ],
-            [
-                'label' => 'Nama Bendahara',
-                'name' => 'nama_bendahara',
-                'view_index' => true
+                'label' => 'Harga (Rp.)',
+                'name' => 'harga',
+                'type' => 'number',
+                'view_index' => true,
             ],
             [
                 'label' => 'Status',
@@ -97,7 +76,7 @@ class SatuanKerjaController extends Controller
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = SatuanKerja::all();
+        $data = Barang::all();
         return view('admin.master.index',compact('template','form','data'));
     }
 
@@ -123,7 +102,7 @@ class SatuanKerjaController extends Controller
     {
         $this->formValidation($request);
         $data = $request->all();
-        SatuanKerja::create($data);
+        Barang::create($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
     }
@@ -136,7 +115,7 @@ class SatuanKerjaController extends Controller
      */
     public function show($id)
     {
-        $data = SatuanKerja::find($id);
+        $data = Barang::find($id);
         $template = (object) $this->template;
         $form = $this->form();
         return view('admin.master.show',compact('data','template','form'));
@@ -150,7 +129,7 @@ class SatuanKerjaController extends Controller
      */
     public function edit($id)
     {
-        $data = SatuanKerja::find($id);
+        $data = Barang::find($id);
         $template = (object) $this->template;
         $form = $this->form();
         return view('admin.master.edit',compact('data','template','form'));
@@ -166,7 +145,7 @@ class SatuanKerjaController extends Controller
     public function update(Request $request, $id)
     {
         $this->formValidation($request);
-        SatuanKerja::find($id)
+        Barang::find($id)
             ->update($request->all());
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
@@ -180,7 +159,7 @@ class SatuanKerjaController extends Controller
      */
     public function destroy($id)
     {
-        SatuanKerja::find($id)
+        Barang::find($id)
             ->delete();
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAgencyTable extends Migration
+class CreateBahanBakusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateAgencyTable extends Migration
      */
     public function up()
     {
-        Schema::create('agency', function (Blueprint $table) {
+        Schema::create('bahan_baku', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name',50);
-            $table->string('phone');
+            $table->string('nama');
+            $table->integer('jumlah');
+            $table->string('satuan');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateAgencyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agency');
+        Schema::dropIfExists('bahan_baku');
     }
 }

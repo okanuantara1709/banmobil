@@ -41,6 +41,11 @@
 
         <div class="login-box-body">
             <p class="login-box-msg">LOGIN</p>
+            @if($errors->any())
+            <div class="alert alert-danger">
+                Username atau password salah
+            </div>
+            @endif
             <form action="{{route('login')}}" method="post">
                 @csrf
                 <div class="form-group has-feedback">

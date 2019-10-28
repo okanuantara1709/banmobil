@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTableCounterHistory extends Migration
+class CreatePelanggansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTableCounterHistory extends Migration
      */
     public function up()
     {
-        Schema::create('counter_history', function (Blueprint $table) {
+        Schema::create('pelanggan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('counter_services_id')->unsigned();
-            $table->datetime('datetime');
-            $table->foreign('counter_services_id')->references('id')->on('counter_services');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('telepon');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateTableCounterHistory extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('counter_history');
+        Schema::dropIfExists('pelanggan');
     }
 }
