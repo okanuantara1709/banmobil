@@ -132,7 +132,7 @@
 
                     @if(AppHelper::access(['Admin','Operator']))
                         <li class="{{$template->menu == 'bahan-baku' ? 'active' : ''}}">
-                            <a href="{{route('admin.bahan-baku.index')}}"  >
+                            <a href="{{route('admin.bahanbaku.index')}}"  >
                                 <i class="fa fa-folder"></i> 
                                 <span>Bahan Baku</span>
                             </a>

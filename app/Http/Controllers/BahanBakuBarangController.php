@@ -13,7 +13,7 @@ class BahanBakuController extends Controller
 
     private $template = [
         'title' => 'Bahan Baku',
-        'route' => 'bahan-baku',
+        'route' => 'admin.bahanbaku',
         'menu' => 'bahan-baku',
         'icon' => 'fa fa-group',
         'theme' => 'skin-blue',

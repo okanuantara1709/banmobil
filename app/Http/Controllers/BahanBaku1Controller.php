@@ -13,7 +13,7 @@ class BahanBakuController extends Controller
 
     private $template = [
         'title' => 'Bahan Baku',
-        'route' => 'admin.bahan-baku',
+        'route' => 'admin.bahanbaku',
         'menu' => 'bahan-baku',
         'icon' => 'fa fa-group',
         'theme' => 'skin-blue',
@@ -78,7 +78,7 @@ class BahanBakuController extends Controller
         $template = (object) $this->template;
         $form = $this->form();
         $data = BahanBaku::all();
-        return view('admin.master.index',compact('template','form','data'));
+        // return view('admin.master.index',compact('template','form','data'));
     }
 
     /**

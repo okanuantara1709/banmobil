@@ -32,9 +32,9 @@
 <body class="hold-transition login-page" style="background-image : url('{{asset("image/logo-login.jpeg")}}');background-size: cover; height: auto  ">
     <div class="login-box">
         <div class="login-logo">
-            <img src="{{asset('img/logo.png')}}" alt="" width="190px">
+            {{-- <img src="{{asset('img/logo.png')}}" alt="" width="190px"> --}}
         </div>
-        {{-- <h3 class="text-center" style="color : white">KPPN</h3> --}}
+        <h3 class="text-center">Sistem Manajemen Garmen</h3>
         <!-- /.login-logo -->
         {{-- Memunculkan alert pemberitahuan --}}
         {!!Alert::showBox()!!}   

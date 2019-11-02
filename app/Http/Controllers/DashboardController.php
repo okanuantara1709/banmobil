@@ -18,6 +18,7 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {   
-       return "dasboard";
+    $template = (object) $this->template;
+       return view('admin.dashboard.index',compact('template'));
     }
 }

@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth','prefix' => 'admin','as' => 'admin.'], func
     Route::get('transaksi/print','TransaksiController@print')->name('transaksi.print');
     Route::resources([       
         'user' => 'UserController',
-        'bahan-baku' => 'BahanBakuController',    
+        'bahanbaku' => 'BahanBakuController',    
         'barang' => 'BarangController',    
         'pelanggan' => 'PelangganController', 
         'produksi' => 'ProduksiController', 
