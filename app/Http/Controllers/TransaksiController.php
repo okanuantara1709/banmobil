@@ -47,7 +47,7 @@ class TransaksiController extends Controller
         ];
         return [
             [
-                'label' => 'Tanggal Pemesanan',
+                'label' => 'Tanggal Transaksi',
                 'name' => 'tanggal',
                 'type' => 'datepicker',
                 'value' => date('Y-m-d'),
@@ -68,7 +68,7 @@ class TransaksiController extends Controller
                 'view_index' => true,
             ],
             [
-                'label' => 'Status Pemesanan',
+                'label' => 'Status Transaksi',
                 'name' => 'status',
                 'type' => 'select',
                 'option' => $status,
@@ -218,10 +218,20 @@ class TransaksiController extends Controller
     public function show($id)
     {
         $data = Transaksi::find($id);
-        $detail = DetailTransaksi::where('transaksi_id',$id)->get();
-        $template = (object) $this->template;
-        $form = $this->form();
-        return view('admin.transaksi.show',compact('data','template','form','detail'));
+        if($data->type == 'Penjualan'){
+            $detail = DetailTransaksi::where('transaksi_id',$id)->get();
+            $template = (object) $this->template;
+            $form = $this->form();
+            return view('admin.transaksi.show',compact('data','template','form','detail'));
+
+        }else{
+            $detail = DetailTransaksiBeli::where('transaksi_id',$id)->get();
+            $template = (object) $this->template;
+            $form = $this->form();
+            unset($form[2]);
+            return view('admin.transaksi.show-beli',compact('data','template','form','detail'));
+        }
+        
     }
 
     /**
