@@ -4,7 +4,7 @@
 @endpush
 @section('content')
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" >
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -17,7 +17,7 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content v-content" style="display:none">
            <div class="row">
                 <div class="col-md-12">
                     @if ($errors->any())
@@ -91,6 +91,28 @@
                 </div>
            </div>
         </section>
+        <section class="content v-password">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info">
+                            <div class="box-header ">
+                                <h4 class="header-title">Masukan password admin</h4>
+                            </div>
+                            <div class="box-body">
+                                <form action="" class="form-password">
+                                    <div class="form-group">
+                                        <label for="">Password :</label>
+                                        <input type="password" class="form-control password" name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         <section class="ex-form-transkasi" style="display:none">
             <div class="form-transaksi " style="display:table-row">
                 <div style="display:table-cell;vertical-align:top;padding:5px">
@@ -117,38 +139,13 @@
         </section>
         <!-- /.content -->
     </div>
+
+        
     <!-- /.content-wrapper -->
 @endsection
 @push('js')
     <!-- page script -->
-    <script src="{{asset('admin-lte/bower_components/ckeditor/ckeditor.js')}}"></script>
-     <script>
-        var map, marker;
-         function initMap(){
-            console.log('INIT MAP');
-            var myLatLng = {lat: {{$data->lat}}, lng: {{$data->lng}} };         
-            $('.lat').val(myLatLng.lat);
-            $('.lng').val(myLatLng.lng); 
-            map = new google.maps.Map(document.getElementById('google_map'), {
-                zoom: 12,
-                center: myLatLng
-            });  
-
-            marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                draggable:true,
-                title: 'Lokasi Desa'
-            });
-
-            google.maps.event.addListener(map,'click', function(event){
-                marker.setPosition(event.latLng);
-                console.log(event);
-                $('.lat').val(event.latLng.lat);
-                $('.lng').val(event.latLng.lng);                
-            });
-        }
-    </script>
+  
     <script>    
         $(document).ready(function(){
 
@@ -208,20 +205,21 @@
                     $('.total-input').val(total);
                 })
             }
+
+            $(".form-password").submit(function(e){
+                e.preventDefault();
+                var password = $(".password").val();
+                if(password == '123456'){
+                    $(".v-password").fadeOut();
+                    $(".v-content").fadeIn();
+                }else{
+                    alert("Password Salah")
+                }
+            })
         })
-    </script>
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDX5i1N1RR3DSQTIRu0ZbIyTgorg7Rhg_g&callback=initMap"></script>
     <script>
-    $(function () {
-        $('#datatables').DataTable()
-        $('#full-datatables').DataTable({
-        'paging'      : true,
-        'lengthChange': false,
-        'searching'   : false,
-        'ordering'    : true,
-        'info'        : true,
-        'autoWidth'   : false
-        })
-    })
-    </script>
+        
+
+
+   
 @endpush

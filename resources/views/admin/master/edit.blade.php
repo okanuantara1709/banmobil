@@ -4,6 +4,7 @@
 @endpush
 @section('content')
     <!-- Content Wrapper. Contains page content -->
+    
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -16,8 +17,9 @@
             </ol>
         </section>
 
+        
         <!-- Main content -->
-        <section class="content">
+        <section class="content v-content " style="display:none">
            <div class="row">
                 <div class="col-md-12">
                     @if ($errors->any())
@@ -50,13 +52,52 @@
                 </div>
            </div>
         </section>
+        
+        <section class="content v-password">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header ">
+                            <h4 class="header-title">Masukan password admin</h4>
+                        </div>
+                        <div class="box-body">
+                            <form action="" class="form-password">
+                                <div class="form-group">
+                                    <label for="">Password :</label>
+                                    <input type="password" class="form-control password" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <!-- /.content -->
     </div>
+    
     <!-- /.content-wrapper -->
 @endsection
 @push('js')
     <!-- page script -->
     <script src="{{asset('admin-lte/bower_components/ckeditor/ckeditor.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".form-password").submit(function(e){
+                e.preventDefault();
+                var password = $(".password").val();
+                if(password == '123456'){
+                    $(".v-password").fadeOut();
+                    $(".v-content").fadeIn();
+                }else{
+                    alert("Password Salah")
+                }
+            })
+        })
+    </script>
      <script>
         var map, marker;
          function initMap(){
@@ -82,6 +123,8 @@
                 $('.lat').val(event.latLng.lat);
                 $('.lng').val(event.latLng.lng);                
             });
+
+            
         }
     </script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDX5i1N1RR3DSQTIRu0ZbIyTgorg7Rhg_g&callback=initMap"></script>

@@ -38,6 +38,6 @@ Route::group(['middleware' => 'auth','prefix' => 'admin','as' => 'admin.'], func
     Route::get('produksi/{id}/bahan-baku','ProduksiController@createBahanBaku')->name('produksi.create.bahan-baku');
     Route::post('produksi/{id}/bahan-baku','ProduksiController@storeBahanBaku')->name('produksi.store.bahan-baku');
     Route::get('produksi/{id}/delete','ProduksiController@deleteBahanBaku')->name('produksi.delete.bahan-baku');
-   
+    
     
 });
