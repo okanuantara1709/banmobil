@@ -72,8 +72,11 @@
                     <div class="box box-info">
                         <div class="box-header">
                             <h3 class="box-title"><i class="{{$template->icon}}"></i> List {{$template->title}}</h3>
+                            <a href="{{route("$template->route".'.createBeli')}}" style="margin-left:10px" class="btn btn-primary pull-right {{AppHelper::config($config,'index.create.is_show') ? AppHelper::config($config,'index.create.is_show') : 'hidden'}}">
+                                <i class="fa fa-plus"></i> Tambah {{$template->title}} Beli
+                            </a>
                             <a href="{{route("$template->route".'.create')}}" class="btn btn-primary pull-right {{AppHelper::config($config,'index.create.is_show') ? AppHelper::config($config,'index.create.is_show') : 'hidden'}}">
-                                <i class="fa fa-pencil"></i> Tambah {{$template->title}}
+                                <i class="fa fa-plus"></i> Tambah {{$template->title}} Jual
                             </a>
                         </div>
                         <div class="box-body">
@@ -113,7 +116,11 @@
                                                 @endif
                                             @endforeach
                                             <td>
-                                                <a href="{{route("$template->route".'.edit',[$row->id])}}" class="btn btn-success btn-sm {{AppHelper::config($config,'index.edit.is_show') ? '' : 'hidden'}}">Ubah</a>
+                                                @if($row->type == 'Pembelian')
+                                                    <a href="{{route("$template->route".'.editBeli',[$row->id])}}" class="btn btn-success btn-sm {{AppHelper::config($config,'index.edit.is_show') ? '' : 'hidden'}}">Ubah</a>
+                                                @else
+                                                    <a href="{{route("$template->route".'.edit',[$row->id])}}" class="btn btn-success btn-sm {{AppHelper::config($config,'index.edit.is_show') ? '' : 'hidden'}}">Ubah</a>
+                                                @endif
                                                 <a href="{{route("$template->route".'.show',[$row->id])}}" class="btn btn-info btn-sm {{AppHelper::config($config,'index.show.is_show') ? '' : 'hidden'}}">Lihat</a>
                                                 <a href="#" class="btn btn-danger btn-sm {{AppHelper::config($config,'index.delete.is_show') ? '' : 'hidden'}}" onclick="confirm('Lanjutkan ?') ? $('#frmDelete{{$row->id}}').submit() : ''">Hapus</a>
                                                 <form action="{{route("$template->route".'.destroy',[$row->id])}}" method="POST" id="frmDelete{{$row->id}}">

@@ -22,6 +22,10 @@ Route::group(['middleware' => 'auth','prefix' => 'admin','as' => 'admin.'], func
     Route::get('user/profile','UserController@profile')->name('user.profile');
     Route::post('user/profile','UserController@setProfile')->name('user.profile.update');
     Route::get('transaksi/print','TransaksiController@print')->name('transaksi.print');
+    Route::get('transaksi/createBeli','TransaksiController@createBeli')->name('transaksi.createBeli');
+    Route::post('transaksi/storeBeli','TransaksiController@storeBeli')->name('transaksi.storeBeli');
+    Route::get('transaksi/{id}/editBeli','TransaksiController@editBeli')->name('transaksi.editBeli');
+    Route::put('transaksi/{id}/updateBeli','TransaksiController@updateBeli')->name('transaksi.updateBeli');
     Route::resources([       
         'user' => 'UserController',
         'bahanbaku' => 'BahanBakuController',    

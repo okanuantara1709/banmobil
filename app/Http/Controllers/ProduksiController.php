@@ -92,7 +92,10 @@ class ProduksiController extends Controller
     {
         $this->formValidation($request);
         $data = $request->all();
+        
         $produksi = Produksi::create($data);
+        $barang = Barang::find($request->barang_id);
+        $barang->update(['jumlah' => $barang->jumlah + $request->jumlah]);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.create.bahan-baku',$produksi->id));
     }
@@ -207,12 +210,19 @@ class ProduksiController extends Controller
         // $this->formValidation($request);
         $data = $request->all();
         $produksi = BahanBakuBarang::create($data);
+        $bahanBaku = BahanBaku::find($request->bahan_baku_id);
+        $bahanBaku->update(['jumlah' => $bahanBaku->jumlah - $request->jumlah]);
         Alert::make('success','Berhasil simpan data');
         return redirect()->back();
     }
 
     public function deleteBahanBaku($id){
+        $bahanBakuBarang = BahanBakuBarang::find($id);
+        $bahanBakuId = $bahanBakuBarang->bahan_baku_id;
+        $bahanBaku = BahanBaku::find($bahanBakuId);
+        $bahanBaku->update(['jumlah' => $bahanBaku->jumlah + $bahanBakuBarang->jumlah ]);
         BahanBakuBarang::destroy($id);
+
         Alert::make('success','Berhasil hapus  data');
         return redirect()->back();
     }

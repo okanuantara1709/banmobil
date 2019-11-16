@@ -33,7 +33,7 @@
                         <div class="box-header">
                             <h3 class="box-title"><i class="{{$template->icon}}"></i> Form Lihat {{$template->title}}</h3>                            
                         </div>
-                        <form action="{{route("$template->route".".update",[$data->id])}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route("$template->route".".updateBeli",[$data->id])}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="box-body">  
@@ -43,7 +43,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Nama Barang</th>
+                                            <th>Nama Bahan Baku</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
                                             <th>Total</th>
@@ -54,16 +54,15 @@
                                         @foreach ($detail as $list)
                                             <tr class="form-transaksi" style="display:table-row">
                                                 <td style="display:table-cell;vertical-align:top;padding:5px">
-                                                    
                                                     <input type="hidden" name="detail_transaksi_id" value="{{$list->id}}">
-                                                    <select name="barang_id[]" class="form-control barang" id="">
-                                                        @foreach ($barang as $item)
-                                                            <option value="{{$item->id}}" {{@AppHelper::selected($list->barang_id,$item->id)}} data-harga="{{$item->harga}}">{{$item->nama}}</option>    
+                                                    <select name="bahan_baku_id[]" class="form-control bahanBaku" id="">
+                                                        @foreach ($bahanBaku as $item)
+                                                            <option value="{{$item->id}}" {{@AppHelper::selected($list->bahan_baku_id,$item->id)}} data-harga="{{$item->harga}}">{{$item->nama}}</option>    
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 <td style="display:table-cell;vertical-align:top;padding:5px">
-                                                    <input type="text" name="harga[]"  readonly class="form-control harga">
+                                                    <input type="text"  name="harga[]" value="{{$list->harga}}"  class="form-control harga">
                                                 </td>
                                                 <td style="display:table-cell;vertical-align:top;padding:5px">
                                                     <input type="text" name="jumlah[]" value="{{$list->jumlah}}"  class="form-control jumlah">
@@ -94,14 +93,14 @@
         <section class="ex-form-transkasi" style="display:none">
             <div class="form-transaksi " style="display:table-row">
                 <div style="display:table-cell;vertical-align:top;padding:5px">
-                    <select name="barang_id[]" class="form-control barang" id="">
-                        @foreach ($barang as $item)
+                    <select name="bahan_baku_id[]" class="form-control bahanBaku" id="">
+                        @foreach ($bahanBaku as $item)
                             <option value="{{$item->id}}" data-harga="{{$item->harga}}">{{$item->nama}}</option>    
                         @endforeach
                     </select>
                 </div>
                 <div style="display:table-cell;vertical-align:top;padding:5px">
-                    <input type="text" name="harga[]" readonly class="form-control harga">
+                    <input type="text" name="harga[]" class="form-control harga">
                 </div>
                 <div style="display:table-cell;vertical-align:top;padding:5px">
                     <input type="text" name="jumlah[]" class="form-control jumlah">
@@ -150,7 +149,7 @@
         }
     </script>
     <script>    
-        $(document).ready(function(){
+         $(document).ready(function(){
 
             function addCommas(nStr) {
                 nStr += '';
@@ -163,14 +162,15 @@
                 }
                 return x1 + x2;
             }
+
+            looping();
+
             function addForm(){
                 var htmlForm = $(".ex-form-transkasi").html();
                 console.log(htmlForm);
                 $(".transaksi-body").append(htmlForm);
                 looping()
             }
-
-            looping()
 
             $(document).on('click','.btn-add',function(){
                 addForm()
@@ -183,7 +183,14 @@
                 looping()
             })
 
-            $(document).on('change','.barang',function(){
+            $(document).on('change','.bahanBaku',function(){
+                looping()
+            })
+
+            $(document).on('keyup','.harga',function(){
+                while(! /^(([0-9]+)((\.|,)([0-9]{0,2}))?)?$/.test($(this).val())){
+                    $(this).val($(this).val().slice(0, -1));
+                }
                 looping()
             })
 
@@ -197,12 +204,12 @@
             function looping(){
                 var total = 0;
                 $(".transaksi-body > .form-transaksi").each(function(index, data){
-                    var harga = $(this).find('.barang').children("option:selected").attr('data-harga');
+                    var harga = $(this).find('.harga').val() || 0;
                     var jumlah = $(this).find('.jumlah').val() || 0;
                     var subtotal = jumlah*harga;
                     total += subtotal;
 
-                    $(this).find('.harga').val(addCommas(harga));
+                    // $(this).find('.harga').val(addCommas(harga));
                     $(this).find('.subtotal').val(addCommas(subtotal));
                     $(".total").html(addCommas(total))
                     $('.total-input').val(total);

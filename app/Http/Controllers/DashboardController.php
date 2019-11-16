@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
+use App\Produksi;
+use App\Transaksi;
+use App\Pelanggan;
 class DashboardController extends Controller
 {
 
@@ -18,7 +21,11 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {   
-    $template = (object) $this->template;
-       return view('admin.dashboard.index',compact('template'));
+        $template = (object) $this->template;
+        $totalProduksi = Produksi::get()->count();
+        $totalPembelian = Transaksi::where('type','Pembelian')->get()->count();
+        $totalPenjualan = Transaksi::where('type','Penjualan')->get()->count();
+        $totalPelanggan = Pelanggan::get()->count();
+        return view('admin.dashboard.index',compact('template','totalProduksi','totalPembelian','totalPenjualan','totalPelanggan'));
     }
 }

@@ -19,6 +19,7 @@ class CreateTransaksisTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('tanggal');
             $table->integer('total');
+            $table->string('type');
             $table->string('status');
             $table->timestamps();
 
