@@ -125,6 +125,7 @@ class TransaksiController extends Controller
         $bahanBaku = BahanBaku::all();
         $template = (object) $this->template;
         $form = $this->form();
+        unset($form[2]);
         return view('admin.transaksi.create-beli',compact('template','form','bahanBaku'));
     }
 
@@ -180,7 +181,7 @@ class TransaksiController extends Controller
         DB::transaction(function() use($request){
             $transaksi = Transaksi::create([
                 'tanggal' => $request->tanggal,
-                'pelanggan_id' => $request->pelanggan_id,
+                'pelanggan_id' => null,
                 'user_id' => Auth::user()->id,
                 'type' => 'Pembelian',
                 'status' => $request->status,

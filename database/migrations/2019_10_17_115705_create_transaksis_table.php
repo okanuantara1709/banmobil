@@ -15,7 +15,7 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('pelanggan_id');
+            $table->unsignedBigInteger('pelanggan_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->date('tanggal');
             $table->integer('total');

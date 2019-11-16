@@ -201,6 +201,7 @@ class ProduksiController extends Controller
         $form = $this->formBahanBaku($id);
         $produksi = Produksi::find($id);
         $bahanBakuBarang = BahanBakuBarang::where('produksi_id',$id)->get();
+        // dd($bahanBakuBarang);
         return view('admin.produksi.create-bahan-baku',compact('template','form','produksi','bahanBakuBarang'));
     }
 
