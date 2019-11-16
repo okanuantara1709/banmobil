@@ -92,6 +92,100 @@
                 <!-- ./col -->
                 
             </div>
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-info">
+                            <div class="box-header">
+                                <h3 class="box-title"><i class="fa fa-filter"></i> Filter</h3>
+                            </div>
+                            <div class="box-body">
+                                <form action="" class="filter">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {!! Render::form([
+                                                    'label' => 'Dari Tanggal',
+                                                    'type' => 'datepicker',
+                                                    'class' => 'changeable',
+                                                    'name' => 'dari_tgl',
+                                                    'value' => $dari_tgl
+                                                ]) 
+                                            !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {!! Render::form([
+                                                    'label' => 'Sampai Tanggal',
+                                                    'type' => 'datepicker',
+                                                    'class' => 'changeable',
+                                                    'name' => 'sampai_tgl',
+                                                    'value' => $sampai_tgl
+                                                ]) 
+                                            !!}
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header">
+                            <h3 class="box-title"><i class="{{$template->icon}}"></i> List {{$template->title}}</h3>
+                            
+                        </div>
+                        <div class="box-body">
+                            <table class="table" id="datatables">
+                                <thead>
+                                    <tr>
+                                        <td>No.</td>
+                                        @foreach ($form as $item)
+                                            @if (array_key_exists('view_index',$item) && $item['view_index'])
+                                            @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                                <td>{{$item['label']}} (Rp)</td>
+                                            @else
+                                                <td>{{$item['label']}}</td>
+                                            @endif
+                                            @endif
+                                        @endforeach
+                                        <td>Opsi</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($data as $key => $row)
+                                        <tr>
+                                            <td>{{$key+1}}</td>
+                                            @foreach ($form as $item)
+                                                @if (array_key_exists('view_index',$item) && $item['view_index'])
+                                                    <td @if(array_key_exists('format',$item) && $item['format'] == 'rupiah') style="text-align:right" @endif>
+                                                        @if (array_key_exists('view_relation',$item))
+                                                        {{ AppHelper::viewRelation($row,$item['view_relation']) }}
+                                                        @else
+                                                            @if(array_key_exists('format',$item) && $item['format'] == 'rupiah')
+                                                                {{number_format($row->{$item['name']},2,',','.')}}
+                                                            @else
+                                                            {{ $row->{$item['name']} }}
+                                                            @endif
+                                                        @endif
+                                                    </td>
+                                                @endif
+                                            @endforeach
+                                            <td>
+                                               
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="box-footer">
+                            <a href="{{route('admin.transaksi.print',['dari_tgl' => $dari_tgl,'sampai_tgl' => $sampai_tgl])}}" class="btn btn-default"><i class="fa fa-print"></i> Cetak Laporan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
            
         </section>
         <!-- /.content -->
@@ -101,4 +195,25 @@
 
 @push('js')
   
+<script>
+        $(function () {
+            $('#datatables').DataTable()
+    
+            $('#full-datatables').DataTable({
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : false,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false
+            })
+    
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format : 'yyyy-mm-dd'
+            }).on('changeDate',function(e){
+                $('.filter').submit();
+            })
+        })
+        </script>
 @endpush

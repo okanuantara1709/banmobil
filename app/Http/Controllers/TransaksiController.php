@@ -31,7 +31,7 @@ class TransaksiController extends Controller
         ]
     ];
 
-    private function form()
+    public function form()
     {
        
         $pelanggan = Pelanggan::select('id as value','nama as name')->get();

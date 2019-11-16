@@ -31,7 +31,7 @@ class DashboardController extends Controller
         $sampai_tgl = empty($request->sampai_tgl) ? date('Y-m-t') : $request->sampai_tgl;
 
         $data = Transaksi::whereBetween('tanggal',[$dari_tgl,$sampai_tgl])->get();
-
-        return view('admin.dashboard.index',compact('template','totalProduksi','totalPembelian','totalPenjualan','totalPelanggan'));
+        $form = app('App\Http\Controllers\TransaksiController')->form();
+        return view('admin.dashboard.index',compact('template','data','dari_tgl','sampai_tgl','form','totalProduksi','totalPembelian','totalPenjualan','totalPelanggan'));
     }
 }
