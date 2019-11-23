@@ -55,12 +55,12 @@
     </style>
     <div class="header">
         <div class="logo">
-            <img src="{{config('kppn.logo')}}" width="80%" alt="">
+            <img src="{{config('assets.logo')}}" width="80%" alt="">
         </div>
         <div class="text">
             <div class="title bold">GARMEN</div>
-            <div class="title bold">NAMA GARMEN</div>
-            <div class="title bold"></div>
+            <div class="title bold">CV TARUM BALI</div>
+            <div class="title bold">Nama jalan dan telepon</div>
         </div>
     </div>
     <div class="section text-center">
@@ -116,7 +116,7 @@
     <br>
     <div class="tte-left">
        <div>Garmen</div>
-       <div>Kepala KPPN DENPASAR</div>
+       <div>Kepala Garmen</div>
        <br>
        <br>
        <div>Nama Pemilik Garnen</div>

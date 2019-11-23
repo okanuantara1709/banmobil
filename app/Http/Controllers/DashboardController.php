@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Produksi;
 use App\Transaksi;
 use App\Pelanggan;
+use AppHelper;
 class DashboardController extends Controller
 {
 
@@ -30,8 +31,24 @@ class DashboardController extends Controller
         $dari_tgl = empty($request->dari_tgl) ? date('Y-m-01') : $request->dari_tgl;
         $sampai_tgl = empty($request->sampai_tgl) ? date('Y-m-t') : $request->sampai_tgl;
 
-        $data = Transaksi::whereBetween('tanggal',[$dari_tgl,$sampai_tgl])->get();
+        $type = $request->type;
+        
+        $data = Transaksi::whereBetween('tanggal',[$dari_tgl,$sampai_tgl]);
+        if($type == ''){
+            $data = $data->get();
+        }else{
+            $data = $data->where('type',$type)->get();
+        }
+        $labels = [];
+        $transaksi = [];
+        for($i = 1;$i <= 12; $i++){
+            $count = Transaksi::whereBetween('tanggal',[date("Y-m-d",strtotime("2019-$i-1")),date("Y-m-t",strtotime("2019-$i-1"))])->get()->count();
+            array_push($transaksi,$count);
+            array_push($labels,AppHelper::bulan($i));
+        }
+        $labels = json_encode($labels);
+        $transaksi = json_encode($transaksi);
         $form = app('App\Http\Controllers\TransaksiController')->form();
-        return view('admin.dashboard.index',compact('template','data','dari_tgl','sampai_tgl','form','totalProduksi','totalPembelian','totalPenjualan','totalPelanggan'));
+        return view('admin.dashboard.index',compact('template','data','dari_tgl','sampai_tgl','form','totalProduksi','totalPembelian','totalPenjualan','totalPelanggan','type','labels','transaksi'));
     }
 }

@@ -124,6 +124,18 @@
                                             !!}
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            {!! Render::form([
+                                                    'label' => 'Tipe',
+                                                    'type' => 'select',
+                                                    'class' => 'changeable',
+                                                    'name' => 'type',
+                                                    'option' => [['value' => '','name' => 'Semua'],['value' => 'Penjualan', 'name' => 'Penjualan'],['value' => 'Pembelian', 'name' => 'Pembelian']]
+                                            ], (object)['type' => $type]) 
+                                            !!}
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -150,7 +162,6 @@
                                             @endif
                                             @endif
                                         @endforeach
-                                        <td>Opsi</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -172,9 +183,7 @@
                                                     </td>
                                                 @endif
                                             @endforeach
-                                            <td>
-                                               
-                                            </td>
+                                          
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -182,6 +191,19 @@
                         </div>
                         <div class="box-footer">
                             <a href="{{route('admin.transaksi.print',['dari_tgl' => $dari_tgl,'sampai_tgl' => $sampai_tgl])}}" class="btn btn-default"><i class="fa fa-print"></i> Cetak Laporan</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header">
+                            <h3 class="box-title">Grafik</h3>
+                        </div>
+                        <div class="box-body">
+                            <canvas id="myChart" width="400" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -194,7 +216,7 @@
 @endsection
 
 @push('js')
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
 <script>
         $(function () {
             $('#datatables').DataTable()
@@ -208,12 +230,64 @@
                 'autoWidth'   : false
             })
     
+            $('.changeable').change(function(){
+                $('.filter').submit();
+            })
             $('.datepicker').datepicker({
                 autoclose: true,
                 format : 'yyyy-mm-dd'
             }).on('changeDate',function(e){
                 $('.filter').submit();
             })
+
+            var labels = {!! $labels !!}
+            var data = {!! $transaksi !!}
+
+            var ctx = document.getElementById('myChart');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Transaksi',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                userCallback: function(label, index, labels) {
+                                    // when the floored value is the same as the value we have a whole number
+                                    if (Math.floor(label) === label) {
+                                        return label;
+                                    }
+
+                                },
+                            }
+                        }]
+                    }
+                }
+            });
+            
         })
         </script>
 @endpush

@@ -61,6 +61,18 @@
                                         !!}
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        {!! Render::form([
+                                                'label' => 'Tipe',
+                                                'type' => 'select',
+                                                'class' => 'changeable',
+                                                'name' => 'type',
+                                                'option' => [['value' => '','name' => 'Semua'],['value' => 'Penjualan', 'name' => 'Penjualan'],['value' => 'Pembelian', 'name' => 'Pembelian']]
+                                        ], (object)['type' => $type]) 
+                                        !!}
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -146,6 +158,7 @@
 @endsection
 @push('js')
     <!-- page script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
     <script>
     $(function () {
         $('#datatables').DataTable()
@@ -157,8 +170,12 @@
             'ordering'    : true,
             'info'        : true,
             'autoWidth'   : false
+
         })
 
+        $('.changeable').change(function(){
+            $('.filter').submit();
+        })
         $('.datepicker').datepicker({
             autoclose: true,
             format : 'yyyy-mm-dd'

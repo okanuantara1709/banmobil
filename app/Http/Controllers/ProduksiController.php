@@ -195,14 +195,15 @@ class ProduksiController extends Controller
         ];
     }
 
-    public function createBahanBaku($id)
+    public function createBahanBaku(Request $request,$id)
     {
         $template = (object) $this->template;
         $form = $this->formBahanBaku($id);
         $produksi = Produksi::find($id);
+        $edit = $request->edit;
         $bahanBakuBarang = BahanBakuBarang::where('produksi_id',$id)->get();
         // dd($bahanBakuBarang);
-        return view('admin.produksi.create-bahan-baku',compact('template','form','produksi','bahanBakuBarang'));
+        return view('admin.produksi.create-bahan-baku',compact('template','form','produksi','bahanBakuBarang','edit'));
     }
 
     public function storeBahanBaku(Request $request,$id)
@@ -214,7 +215,7 @@ class ProduksiController extends Controller
         $bahanBaku = BahanBaku::find($request->bahan_baku_id);
         $bahanBaku->update(['jumlah' => $bahanBaku->jumlah - $request->jumlah]);
         Alert::make('success','Berhasil simpan data');
-        return redirect()->back();
+        return redirect(route('admin.produksi.create.bahan-baku',$id));
     }
 
     public function deleteBahanBaku($id){

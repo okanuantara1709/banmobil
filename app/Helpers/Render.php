@@ -291,7 +291,7 @@ class Render
         return "
 			<div class='form-group'>
 				<label for=\"$this->name\">$this->label</label>
-				<select name='$this->name' $this->required id=\"$this->name\" class=\"form-control\">
+				<select name='$this->name' $this->required id=\"$this->name\" class=\"form-control $this->class\">
 					$option
 				</select>   	
 			</div>

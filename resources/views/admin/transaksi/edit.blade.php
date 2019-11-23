@@ -92,27 +92,27 @@
            </div>
         </section>
         <section class="content v-password">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="box box-info">
-                            <div class="box-header ">
-                                <h4 class="header-title">Masukan password admin</h4>
-                            </div>
-                            <div class="box-body">
-                                <form action="" class="form-password">
-                                    <div class="form-group">
-                                        <label for="">Password :</label>
-                                        <input type="password" class="form-control password" name="password">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-primary">Simpan</button>
-                                    </div>
-                                </form>
-                            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <div class="box-header ">
+                            <h4 class="header-title">Masukan password admin</h4>
+                        </div>
+                        <div class="box-body">
+                            <form action="" class="form-password">
+                                <div class="form-group">
+                                    <label for="">Password :</label>
+                                    <input type="password" class="form-control password" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
         <section class="ex-form-transkasi" style="display:none">
             <div class="form-transaksi " style="display:table-row">
                 <div style="display:table-cell;vertical-align:top;padding:5px">

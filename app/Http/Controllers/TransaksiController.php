@@ -89,16 +89,23 @@ class TransaksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $template = (object) $this->template;
         $form = $this->form();
 
         $dari_tgl = empty($request->dari_tgl) ? date('Y-m-01') : $request->dari_tgl;
         $sampai_tgl = empty($request->sampai_tgl) ? date('Y-m-t') : $request->sampai_tgl;
+        $type = $request->type;
+        
+        $data = Transaksi::whereBetween('tanggal',[$dari_tgl,$sampai_tgl]);
+        if($type == ''){
+            $data = $data->get();
+        }else{
+            $data = $data->where('type',$type)->get();
+        }
 
-        $data = Transaksi::whereBetween('tanggal',[$dari_tgl,$sampai_tgl])->get();
-        return view('admin.transaksi.index',compact('template','form','data','dari_tgl','sampai_tgl'));
+        return view('admin.transaksi.index',compact('template','form','data','dari_tgl','sampai_tgl','type'));
     }
 
     /**
