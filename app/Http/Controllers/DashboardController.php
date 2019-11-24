@@ -39,16 +39,45 @@ class DashboardController extends Controller
         }else{
             $data = $data->where('type',$type)->get();
         }
+
+
         $labels = [];
         $transaksi = [];
         for($i = 1;$i <= 12; $i++){
-            $count = Transaksi::whereBetween('tanggal',[date("Y-m-d",strtotime("2019-$i-1")),date("Y-m-t",strtotime("2019-$i-1"))])->get()->count();
+            $count = Transaksi::whereBetween('tanggal',[date("Y-m-d",strtotime("2019-$i-1")),date("Y-m-t",strtotime("2019-$i-1"))])
+                    ->where('type','Penjualan')->get()->count();
             array_push($transaksi,$count);
             array_push($labels,AppHelper::bulan($i));
         }
         $labels = json_encode($labels);
         $transaksi = json_encode($transaksi);
+
+        $labelsPembelian = [];
+        $transaksiPembelian = [];
+        for($i = 1;$i <= 12; $i++){
+            $count = Transaksi::whereBetween('tanggal',[date("Y-m-d",strtotime("2019-$i-1")),date("Y-m-t",strtotime("2019-$i-1"))])
+                    ->where('type','Penjualan')->get()->count();
+            array_push($transaksiPembelian,$count);
+            array_push($labelsPembelian,AppHelper::bulan($i));
+        }
+        $labelsPembelian = json_encode($labels);
+        $transaksiPembelian = json_encode($transaksi);
+
         $form = app('App\Http\Controllers\TransaksiController')->form();
-        return view('admin.dashboard.index',compact('template','data','dari_tgl','sampai_tgl','form','totalProduksi','totalPembelian','totalPenjualan','totalPelanggan','type','labels','transaksi'));
+        return view('admin.dashboard.index',compact('template',
+                                                    'data',
+                                                    'dari_tgl',
+                                                    'sampai_tgl',
+                                                    'form',
+                                                    'totalProduksi',
+                                                    'totalPembelian',
+                                                    'totalPenjualan',
+                                                    'totalPelanggan',
+                                                    'type',
+                                                    'labels',
+                                                    'transaksi',
+                                                    'labelsPembelian',
+                                                    'transaksiPembelian'
+                                                ));
     }
 }

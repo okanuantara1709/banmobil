@@ -131,7 +131,7 @@
                                     <input type="password" class="form-control password" name="password">
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-primary">Simpan</button>
+                                    <button class="btn btn-primary">Login</button>
                                 </div>
                             </form>
                         </div>

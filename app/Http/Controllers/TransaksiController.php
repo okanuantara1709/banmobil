@@ -146,7 +146,7 @@ class TransaksiController extends Controller
     {
         // dd($request->all());
         
-        DB::transaction(function() use($request){
+        $return = DB::transaction(function() use($request){
             
             $transaksi = Transaksi::create([
                 'tanggal' => $request->tanggal,
@@ -166,13 +166,22 @@ class TransaksiController extends Controller
 
                 $barang = Barang::find($value);
                 $stok = $barang->jumlah - $request->jumlah[$key];
+                if($stok < 0){
+                    Alert::make('danger',"Jumlah stok $barang->nama tidak mencukupi");
+                    return false;
+                }
                 $barang->update(['jumlah' => $stok]);
                 DetailTransaksi::create($array);
+                return true;
             }
         });
 
-        Alert::make('success','Berhasil simpan data');
-        return redirect(route($this->template['route'].'.index'));
+        if($return){
+            Alert::make('success','Berhasil simpan data');
+            return redirect(route($this->template['route'].'.index'));
+        }else{
+            return redirect(route($this->template['route'].'.create'));
+        }
     }
 
     /**
@@ -185,7 +194,7 @@ class TransaksiController extends Controller
     {
         // dd($request->all());
         
-        DB::transaction(function() use($request){
+        $return = DB::transaction(function() use($request){
             $transaksi = Transaksi::create([
                 'tanggal' => $request->tanggal,
                 'pelanggan_id' => null,
@@ -203,17 +212,19 @@ class TransaksiController extends Controller
                 $array['transaksi_id'] = $transaksi->id;
 
                 $bahanBaku = BahanBaku::find($value);
-                $stok = $bahanBaku->jumlah + $request->jumlah[$key];
+                $stok = $bahanBaku->jumlah + $request->jumlah[$key];                
                 $bahanBaku->update(['jumlah' => $stok]);
 
                 DetailTransaksiBeli::create($array);
+                return true;
             }
         });
         
         
-
-        Alert::make('success','Berhasil simpan data');
-        return redirect(route($this->template['route'].'.index'));
+        if($return){
+            Alert::make('success','Berhasil simpan data');
+            return redirect(route($this->template['route'].'.index'));
+        }
     }
 
     /**

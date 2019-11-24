@@ -210,12 +210,26 @@ class ProduksiController extends Controller
     {
         // dd($request->all());
         // $this->formValidation($request);
-        $data = $request->all();
-        $produksi = BahanBakuBarang::create($data);
-        $bahanBaku = BahanBaku::find($request->bahan_baku_id);
-        $bahanBaku->update(['jumlah' => $bahanBaku->jumlah - $request->jumlah]);
-        Alert::make('success','Berhasil simpan data');
-        return redirect(route('admin.produksi.create.bahan-baku',$id));
+        $return = DB::transaction(function() use($request,$id){
+            $data = $request->all();
+            $bahanBaku = BahanBaku::find($request->bahan_baku_id);
+            $jumlah = $bahanBaku->jumlah - $request->jumlah;
+            if($jumlah < 0){
+                Alert::make('danger',"Stok $bahanBaku->nama tidak mencukupi");
+                return false;
+            }else{
+                $produksi = BahanBakuBarang::create($data);
+                $bahanBaku->update(['jumlah' => $jumlah]);
+                
+            } 
+        });
+
+        if(!$return){
+            return redirect(route('admin.produksi.create.bahan-baku',$id));
+        }else{
+            Alert::make('success','Berhasil simpan data');
+            return redirect(route('admin.produksi.create.bahan-baku',$id));
+        }
     }
 
     public function deleteBahanBaku($id){
