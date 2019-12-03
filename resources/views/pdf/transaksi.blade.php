@@ -46,7 +46,7 @@
         }
         .tte-left{
             float: left;
-            width: 30%;
+            width: 40%;
         }
         .tte-right{
             float: right;
@@ -118,8 +118,8 @@
        <div>Owner</div>
        <br>
        <br>
-       <div>Nama Pemilik Garnen</div>
-       <div>197011291997031001</div>
+       <div>I GUSTI NGURAH ADI KUSUMA</div>
+       
     </div>
     
     {{-- <div class="tte-right">
