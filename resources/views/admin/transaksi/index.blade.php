@@ -84,11 +84,9 @@
                     <div class="box box-info">
                         <div class="box-header">
                             <h3 class="box-title"><i class="{{$template->icon}}"></i> List {{$template->title}}</h3>
-                            <a href="{{route("$template->route".'.createBeli')}}" style="margin-left:10px" class="btn btn-primary pull-right {{AppHelper::config($config,'index.create.is_show') ? AppHelper::config($config,'index.create.is_show') : 'hidden'}}">
-                                <i class="fa fa-plus"></i> Tambah {{$template->title}} Beli
-                            </a>
+                            
                             <a href="{{route("$template->route".'.create')}}" class="btn btn-success pull-right {{AppHelper::config($config,'index.create.is_show') ? AppHelper::config($config,'index.create.is_show') : 'hidden'}}">
-                                <i class="fa fa-plus"></i> Tambah {{$template->title}} Jual
+                                <i class="fa fa-plus"></i> Tambah {{$template->title}}
                             </a>
                         </div>
                         <div class="box-body">

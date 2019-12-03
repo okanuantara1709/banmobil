@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaksi;
-use App\Pelanggan;
 use App\Barang;
-use App\BahanBaku;
 use App\Helpers\ControllerTrait;
 use App\Helpers\Alert;
 use Auth;
 use DB;
 use App\DetailTransaksi;
-use App\DetailTransaksiBeli;
 use Mpdf\Mpdf;
 use AppHelper;
 
@@ -34,22 +31,22 @@ class TransaksiController extends Controller
     public function form()
     {
        
-        $pelanggan = Pelanggan::select('id as value','nama as name')->get();
-        $status = [
+        $type = [
             [
-                'value' => 'Aktif',
-                'name' => 'Aktif'
+                'value' => 'Penjualan',
+                'name' => 'Penjualan'
             ],
             [
-                'value' => 'Batal',
-                'name' => 'Batal'
+                'value' => 'Pembelian',
+                'name' => 'Pembelian'
             ],
         ];
         return [
             [
                 'label' => 'Tanggal Transaksi',
                 'name' => 'tanggal',
-                'type' => 'datepicker',
+                'type' => 'text',
+                'attr' => 'readonly',
                 'value' => date('Y-m-d'),
                 'view_index' => true,
             ],   
@@ -58,20 +55,12 @@ class TransaksiController extends Controller
                 'name' => 'type',
                 'type' => 'hidden',
                 'view_index' => true,
-            ],           
+            ],   
             [
-                'label' => 'Pelanggan',
-                'name' => 'pelanggan_id',
+                'label' => 'Tipe',
+                'name' => 'type',
                 'type' => 'select',
-                'option' => $pelanggan,
-                'view_relation' => 'pelanggan->nama',
-                'view_index' => true,
-            ],
-            [
-                'label' => 'Status Transaksi',
-                'name' => 'status',
-                'type' => 'select',
-                'option' => $status,
+                'option' => $type,
                 'view_index' => true,
             ],
             
@@ -122,20 +111,7 @@ class TransaksiController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function createBeli()
-    {
-        $bahanBaku = BahanBaku::all();
-        $template = (object) $this->template;
-        $form = $this->form();
-        unset($form[2]);
-        return view('admin.transaksi.create-beli',compact('template','form','bahanBaku'));
-    }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -146,14 +122,13 @@ class TransaksiController extends Controller
     {
         // dd($request->all());
         
-        $return = DB::transaction(function() use($request){
-            
+        DB::beginTransaction();
+            $return = true;
             $transaksi = Transaksi::create([
-                'tanggal' => $request->tanggal,
-                'pelanggan_id' => $request->pelanggan_id,
+                'tanggal' => date('Y-m-d H:i:s'),
                 'user_id' => Auth::user()->id,
-                'type' => 'Penjualan',
-                'status' => $request->status,
+                'type' => $request->type,
+                'status' => 'Aktif',
                 'total' => $request->total
             ]);
 
@@ -165,67 +140,35 @@ class TransaksiController extends Controller
                 $array['transaksi_id'] = $transaksi->id;
 
                 $barang = Barang::find($value);
-                $stok = $barang->jumlah - $request->jumlah[$key];
-                if($stok < 0){
-                    Alert::make('danger',"Jumlah stok $barang->nama tidak mencukupi");
-                    return false;
+                if($request->type == 'Penjualan'){
+                    $stok = $barang->jumlah - $request->jumlah[$key];
+                    if($stok < 0){
+                        Alert::make('danger',"Jumlah stok $barang->nama tidak mencukupi");
+                        $return = false;
+                    }
+                }else{
+                    $stok = $barang->jumlah + $request->jumlah[$key];
                 }
                 $barang->update(['jumlah' => $stok]);
                 DetailTransaksi::create($array);
-                return true;
+                
             }
-        });
+
+            
+        
 
         if($return){
+            DB::commit();
             Alert::make('success','Berhasil simpan data');
             return redirect(route($this->template['route'].'.index'));
         }else{
+            DB::rollback();
             return redirect(route($this->template['route'].'.create'));
+
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function storeBeli(Request $request)
-    {
-        // dd($request->all());
-        
-        $return = DB::transaction(function() use($request){
-            $transaksi = Transaksi::create([
-                'tanggal' => $request->tanggal,
-                'pelanggan_id' => null,
-                'user_id' => Auth::user()->id,
-                'type' => 'Pembelian',
-                'status' => $request->status,
-                'total' => $request->total
-            ]);
-
-            foreach($request->bahanBaku_id as $key => $value){
-                $array['bahan_baku_id'] = $value;
-                $array['harga'] = AppHelper::numberOnly($request->harga[$key]);
-                $array['jumlah'] = $request->jumlah[$key];
-                $array['subtotal'] = AppHelper::numberOnly($request->subtotal[$key]);
-                $array['transaksi_id'] = $transaksi->id;
-
-                $bahanBaku = BahanBaku::find($value);
-                $stok = $bahanBaku->jumlah + $request->jumlah[$key];                
-                $bahanBaku->update(['jumlah' => $stok]);
-
-                DetailTransaksiBeli::create($array);
-                return true;
-            }
-        });
-        
-        
-        if($return){
-            Alert::make('success','Berhasil simpan data');
-            return redirect(route($this->template['route'].'.index'));
-        }
-    }
+   
 
     /**
      * Display the specified resource.
@@ -268,22 +211,7 @@ class TransaksiController extends Controller
         return view('admin.transaksi.edit',compact('data','template','form','detail','barang'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editBeli($id)
-    {
-        $bahanBaku = BahanBaku::all();
-        $data = Transaksi::find($id);
-        $detail = DetailTransaksiBeli::where('transaksi_id',$id)->get();
-        // dd($detail);
-        $template = (object) $this->template;
-        $form = $this->form();
-        return view('admin.transaksi.edit-beli',compact('data','template','form','detail','bahanBaku'));
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -338,68 +266,6 @@ class TransaksiController extends Controller
 
                     $detailTransaksi->update($array);
                 }
-            }
-        });
-
-        Alert::make('success','Berhasil simpan data');
-        return redirect(route($this->template['route'].'.index'));
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateBeli(Request $request, $id)
-    {
-        DB::transaction(function() use($request,$id){
-            Transaksi::find($id)
-                ->update([
-                    'tanggal' => $request->tanggal,
-                    'pelanggan_id' => $request->pelanggan_id,
-                    'user_id' => Auth::user()->id,
-                    'status' => $request->status,
-                    'total' => $request->total
-                ]);
-            
-            // DetailTransaksi::where('transaksi_id',$id)->delete();
-
-            foreach($request->bahan_baku_id as $key => $value){
-                $array['bahan_baku_id'] = $value;
-                $array['harga'] = AppHelper::numberOnly($request->harga[$key]);
-                $array['jumlah'] = $request->jumlah[$key];
-                $array['subtotal'] = AppHelper::numberOnly($request->subtotal[$key]);
-                $array['transaksi_id'] = $id;
-                // dd($request->detail_transaksi_id[$key]);
-                if(!empty($request->detail_transaksi_id[$key])){
-                    $detailTransaksi = DetailTransaksiBeli::find($request->detail_transaksi_id);
-                    $jumlah = $detailTransaksi->jumlah;
-                    $array['bahan_baku_id'] = $value;
-                    $array['harga'] = AppHelper::numberOnly($request->harga[$key]);
-                    $array['jumlah'] = $request->jumlah[$key];
-                    $array['subtotal'] = AppHelper::numberOnly($request->subtotal[$key]);
-                    $array['transaksi_id'] = $id;
-
-                    // jika jumlah sebelum diedit lebih besar dari transaksi sekarang
-                    if($jumlah > $request->jumlah[$key]){
-                        $bahanBaku = BahanBaku::find($value);
-                        $selisih = $jumlah - $request->jumlah[$key];
-                        $stok = $bahanBaku->jumlah - $selisih;
-                        $bahanBaku->update(['jumlah' => $stok]);
-                    }else{
-                        $bahanBaku = BahanBaku::find($value);
-                        $selisih = $request->jumlah[$key] - $jumlah;
-                        $stok = $bahanBaku->jumlah + $selisih;
-                        $bahanBaku->update(['jumlah' => $stok]);
-                    }
-
-                    $detailTransaksi->update($array);
-                }
-
-                
             }
         });
 

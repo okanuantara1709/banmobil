@@ -52,7 +52,7 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>T</b>B</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Tarum Bali</b></span>
+                <span class="logo-lg"><b>Panel</b></span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -131,10 +131,10 @@
                     @endif
 
                     @if(AppHelper::access(['Admin','Operator']))
-                        <li class="{{$template->menu == 'bahan-baku' ? 'active' : ''}}">
-                            <a href="{{route('admin.bahanbaku.index')}}"  >
-                                <i class="fa fa-folder"></i> 
-                                <span>Bahan Baku</span>
+                        <li class="{{$template->menu == 'kategori' ? 'active' : ''}}">
+                            <a href="{{route('admin.kategori.index')}}"  >
+                                <i class="fa fa-tags"></i> 
+                                <span>Kategori</span>
                             </a>
                         </li>   
                     @endif
@@ -148,23 +148,8 @@
                         </li>   
                     @endif
 
-                    @if(AppHelper::access(['Admin','Operator']))
-                        <li class="{{$template->menu == 'produksi' ? 'active' : ''}}">
-                            <a href="{{route('admin.produksi.index')}}"  >
-                                <i class="fa fa-circle"></i> 
-                                <span>Produksi</span>
-                            </a>
-                        </li>   
-                    @endif
+                   
 
-                    @if(AppHelper::access(['Admin','Operator']))
-                        <li class="{{$template->menu == 'pelanggan' ? 'active' : ''}}">
-                            <a href="{{route('admin.pelanggan.index')}}"  >
-                                <i class="fa fa-users"></i> 
-                                <span>Pelanggan</span>
-                            </a>
-                        </li>   
-                    @endif
 
                     
 
@@ -188,7 +173,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.4.0
             </div>
-            <strong>Copyright &copy; 2019 <a href="https://adminlte.io">STIKOM BALI</a>.</strong> All rights
+            <strong>Copyright &copy; 2019 .</strong> All rights
             reserved.
         </footer>
         

@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Pelanggan;
+use App\Kategori;
 use App\Helpers\ControllerTrait;
 use App\Helpers\Alert;
 
-class PelangganController extends Controller
+class KategoriController extends Controller
 {
     use ControllerTrait;
 
     private $template = [
-        'title' => 'Pelanggan',
-        'route' => 'admin.pelanggan',
-        'menu' => 'pelanggan',
+        'title' => 'Kategori',
+        'route' => 'admin.kategori',
+        'menu' => 'kategori',
         'icon' => 'fa fa-group',
         'theme' => 'skin-blue',
         'config' => [
@@ -24,40 +24,14 @@ class PelangganController extends Controller
 
     private function form()
     {
-        $satuan = [
-            ['value' => 'Kg','name' => 'Kg'],
-            ['value' => 'Meter','name' => 'Meter'],
-        ];
-
-        $status = [
-            [
-                'value' => 'Aktif',
-                'name' => 'Aktif'
-            ],
-            [
-                'value' => 'Tidak Aktif',
-                'name' => 'Tidak Aktif'
-            ]
-        ];
+        
 
         return [
             [
-                'label' => 'Nama Pelanggan',
+                'label' => 'Nama Kategori',
                 'name' => 'nama',
                 'view_index' => true,
-            ],           
-            [
-                'label' => 'Alamat',
-                'name' => 'alamat',
-                'type' => 'text',
-                'view_index' => true,
-            ],
-            [
-                'label' => 'Telepon',
-                'name' => 'telepon',
-                'type' => 'text',
-                'view_index' => true,
-            ],
+            ], 
         ];
     }
     /**
@@ -69,7 +43,7 @@ class PelangganController extends Controller
     {
         $template = (object) $this->template;
         $form = $this->form();
-        $data = Pelanggan::all();
+        $data = Kategori::all();
         return view('admin.master.index',compact('template','form','data'));
     }
 
@@ -95,7 +69,7 @@ class PelangganController extends Controller
     {
         $this->formValidation($request);
         $data = $request->all();
-        Pelanggan::create($data);
+        Kategori::create($data);
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
     }
@@ -108,7 +82,7 @@ class PelangganController extends Controller
      */
     public function show($id)
     {
-        $data = Pelanggan::find($id);
+        $data = Kategori::find($id);
         $template = (object) $this->template;
         $form = $this->form();
         return view('admin.master.show',compact('data','template','form'));
@@ -122,7 +96,7 @@ class PelangganController extends Controller
      */
     public function edit($id)
     {
-        $data = Pelanggan::find($id);
+        $data = Kategori::find($id);
         $template = (object) $this->template;
         $form = $this->form();
         return view('admin.master.edit',compact('data','template','form'));
@@ -138,7 +112,7 @@ class PelangganController extends Controller
     public function update(Request $request, $id)
     {
         $this->formValidation($request);
-        Pelanggan::find($id)
+        Kategori::find($id)
             ->update($request->all());
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));
@@ -152,7 +126,7 @@ class PelangganController extends Controller
      */
     public function destroy($id)
     {
-        Pelanggan::find($id)
+        Kategori::find($id)
             ->delete();
         Alert::make('success','Berhasil simpan data');
         return redirect(route($this->template['route'].'.index'));

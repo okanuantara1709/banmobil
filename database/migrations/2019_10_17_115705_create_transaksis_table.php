@@ -15,7 +15,6 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('pelanggan_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->date('tanggal');
             $table->integer('total');
@@ -23,7 +22,6 @@ class CreateTransaksisTable extends Migration
             $table->string('status');
             $table->timestamps();
 
-            $table->foreign('pelanggan_id')->references('id')->on('pelanggan')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

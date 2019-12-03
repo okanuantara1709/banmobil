@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBahanBakusTable extends Migration
+class CreateKategorisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateBahanBakusTable extends Migration
      */
     public function up()
     {
-        Schema::create('bahan_baku', function (Blueprint $table) {
+        Schema::create('kategori', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nama');
-            $table->integer('jumlah');
-            $table->string('satuan');
-            $table->string('status');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateBahanBakusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bahan_baku');
+        Schema::dropIfExists('kategoris');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Barang;
+use App\Kategori;
 use App\Helpers\ControllerTrait;
 use App\Helpers\Alert;
 
@@ -24,21 +25,9 @@ class BarangController extends Controller
 
     private function form()
     {
-        $satuan = [
-            ['value' => 'Kg','name' => 'Kg'],
-            ['value' => 'Meter','name' => 'Meter'],
-        ];
+        $kategori = Kategori::select('id as value','nama as name')->get();
 
-        $status = [
-            [
-                'value' => 'Aktif',
-                'name' => 'Aktif'
-            ],
-            [
-                'value' => 'Tidak Aktif',
-                'name' => 'Tidak Aktif'
-            ]
-        ];
+       
 
         return [
             [
@@ -59,11 +48,11 @@ class BarangController extends Controller
                 'view_index' => true,
             ],
             [
-                'label' => 'Status',
-                'name' => 'status',
+                'label' => 'Kategori',
+                'name' => 'kategori_id',
                 'view_index' => true,
                 'type' => 'select',
-                'option' => $status
+                'option' => $kategori
             ]
         ];
     }

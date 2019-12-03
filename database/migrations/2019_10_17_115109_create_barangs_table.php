@@ -19,7 +19,10 @@ class CreateBarangsTable extends Migration
             $table->integer('jumlah');
             $table->integer('harga');
             $table->string('status');
+            $table->unsignedBigInteger('kategori_id');
             $table->timestamps();
+
+            $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
         });
     }
 

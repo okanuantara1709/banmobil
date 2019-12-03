@@ -58,14 +58,13 @@
             <img src="{{config('assets.logo')}}" width="80%" alt="">
         </div>
         <div class="text">
-            <div class="title bold">GARMEN</div>
-            <div class="title bold">CV TARUM BALI</div>
+            <div class="title bold">Sistem Manajemen Penjualan</div>
+            <div class="title bold">UD Karunia Ban</div>
             <div class="title bold">Nama jalan dan telepon</div>
         </div>
     </div>
     <div class="section text-center">
-        <div class="section-text">LAPORAN TRANSAKSI</div>
-        
+        <div class="section-text">LAPORAN TRANSAKSI {{$dari_tgl}} - {{$sampai_tgl}}</div>
         {{-- <div class="section-text">{{$satkerSelected->nama_satker}}</div> --}}
     </div>
     <br>
@@ -115,8 +114,8 @@
     <br>
     <br>
     <div class="tte-left">
-       <div>Garmen</div>
-       <div>Kepala Garmen</div>
+       <div>UD Karunia Ban</div>
+       <div>Owner</div>
        <br>
        <br>
        <div>Nama Pemilik Garnen</div>

@@ -29,12 +29,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition login-page" style="background-color:#fff ">
+<body class="hold-transition login-page" style="">
     <div class="login-box" >
         <div class="login-logo">
-            <img src="{{config('assets.logo')}}" alt="" width="190px">
+            {{-- <img src="{{config('assets.logo')}}" alt="" width="190px"> --}}
         </div>
-        <h3 class="text-center">Sistem Informasi Manajemen Garmen</h3>
+        <h3 class="text-center">Sistem Informasi Manajemen Penjualan</h3>
         <!-- /.login-logo -->
         {{-- Memunculkan alert pemberitahuan --}}
         {!!Alert::showBox()!!}   
